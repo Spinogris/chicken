@@ -1,0 +1,20 @@
+<!-- Окно логирования -->
+<div th:fragment="login">
+    <div class="login-container" id="loginContainer">
+        <div class="login-content">
+            <span class="close" onclick="closeLogin()">&times;</span>
+            <h2>Login</h2>
+            <form id="loginForm">
+                <label for="username">email:</label>
+                <input type="text" id="email" name="emale" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Login</button>
+            </form>
+            <!-- Добавляем кнопку "Register" для открытия окна регистрации -->
+            <p>Don't have an account?
+                <button onclick="showRegistration()">Register</button>
+            </p>
+        </div>
+    </div>
+</div>
