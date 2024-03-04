@@ -13,14 +13,20 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Lob
+    @Column(name = "image")
+    private String image;
+
     @Column(name = "name")
     private String name;
 
     @Column(name = "article")
-    private String Article;
+    private String article;
 
     @Column(name = "price")
     private double price;
 
+    @Column(name = "price_kg")
+    private double priceKg;
 
 }
