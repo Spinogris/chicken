@@ -13,7 +13,6 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Lob
     @Column(name = "image")
     private String image;
 

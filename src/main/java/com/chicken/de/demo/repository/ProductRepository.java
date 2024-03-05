@@ -1,9 +1,10 @@
 package com.chicken.de.demo.repository;
 
 import com.chicken.de.demo.entity.Product;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@RestController
-public interface ProductRepository extends CrudRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
+
+    Product getProductById(Long id);
+
 }
