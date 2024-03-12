@@ -1,9 +1,6 @@
 package com.chicken.de.demo.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Set;
 
@@ -31,5 +28,9 @@ public class AccountInfo {
 
     @Column(name = "role")
     private Set<Role> role;
+
+
+    @OneToOne(mappedBy = "accountInfo")
+    private AccountInfo accountInfo;
 
 }
