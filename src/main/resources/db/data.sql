@@ -23,6 +23,11 @@ create table IF NOT EXISTS role (
     role_name varchar(128) null
 );
 
+create table IF NOT EXISTS cart (
+    id int not null primary key,
+    role_name varchar(128) null
+);
+
 -- Заполнение таблицы account случайными данными
 INSERT INTO account (id, city, email, first_name, last_name, password, phone_number, role)
 VALUES (555, 'Traunreut', 'email1@example.com', 'Eduard', 'Miller', '111', '1234567890', 'user'),
