@@ -8,12 +8,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity(name = "product")
+@Table(name = "product")
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
