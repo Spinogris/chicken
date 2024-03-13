@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Table
-@Entity(name = "role")
+@Entity(name = "roles")
 @ToString
 public class Role {
 
@@ -20,7 +20,7 @@ public class Role {
     @Column(name = "role_name")
     private String roleName;
 
-    @OneToOne
+    @ManyToOne
     private AccountInfo accountInfo;
 
 }

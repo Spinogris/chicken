@@ -5,13 +5,14 @@ import lombok.*;
 
 import java.util.Set;
 
+
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "account_info")
-@ToString
 @Entity
+@Table(name = "account_info")
 public class AccountInfo {
 
     @Id
@@ -34,11 +35,10 @@ public class AccountInfo {
     @Column(name = "password")
     private String password;
 
-    @OneToOne(mappedBy = "id")
-    @Column(name = "role")
+    @OneToMany(mappedBy = "accountInfo")
     private Set<Role> role;
 
     @OneToOne(mappedBy = "accountInfo")
-    private AccountInfo accountInfo;
+    private Account account;
 
 }
