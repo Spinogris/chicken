@@ -1,9 +1,17 @@
 package com.chicken.de.demo.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Set;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "account_info")
+@ToString
+@Entity
 public class AccountInfo {
 
     @Id
@@ -26,9 +34,9 @@ public class AccountInfo {
     @Column(name = "password")
     private String password;
 
+    @OneToOne(mappedBy = "id")
     @Column(name = "role")
     private Set<Role> role;
-
 
     @OneToOne(mappedBy = "accountInfo")
     private AccountInfo accountInfo;

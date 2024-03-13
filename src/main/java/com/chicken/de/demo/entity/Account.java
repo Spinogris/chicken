@@ -3,11 +3,13 @@ package com.chicken.de.demo.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @Table(name = "account")
 @Entity
+@ToString
 public class Account {
 
     @Id
@@ -21,5 +23,6 @@ public class Account {
     @Column(name = "last_name")
     private String lastName;
 
-
+    @OneToOne
+    private AccountInfo accountInfo;
 }

@@ -3,11 +3,13 @@ package com.chicken.de.demo.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @Table
 @Entity(name = "role")
+@ToString
 public class Role {
 
     @Id
