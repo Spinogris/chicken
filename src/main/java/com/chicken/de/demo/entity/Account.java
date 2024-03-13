@@ -1,15 +1,15 @@
 package com.chicken.de.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
-@Table(name = "accounts")
-@Entity
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "accounts")
 public class Account {
 
     @Id
