@@ -1,11 +1,18 @@
 package com.chicken.de.demo.service.interf;
 
 import com.chicken.de.demo.entity.Product;
-import org.hibernate.mapping.List;
+
+import java.util.List;
 
 public interface ProductService {
 
-    Product getProdById(String id);
+    Product saveProduct(Product product);
 
-    List getAllProducts();
+    Product getProdById(Long id);
+
+    List<Product> getAllProducts();
+
+    Product removeProductById(Long id);
+
+    Product searchProductByArticle(String article);
 }

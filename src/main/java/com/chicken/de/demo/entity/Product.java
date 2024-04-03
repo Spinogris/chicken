@@ -1,5 +1,6 @@
 package com.chicken.de.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,15 +9,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Table(name = "products")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "products")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Product {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "image")
@@ -32,6 +34,6 @@ public class Product {
     private double price;
 
     @Column(name = "price_kg")
-    private double priceKg;
+    private Double priceKg;
 
 }
