@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,9 +16,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private AccountRepository accountRepository;
-
-    @Autowired
-    private final AccountService accountService;
 
     @Override
     public Account saveAccount(Account account) {
@@ -33,5 +31,17 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public List<Account> getAllAccounts(){
         return accountRepository.findAll();
+    }
+
+    @Override
+    public Account removeAccountById(Long id){
+        Optional<Account> remAccById = accountRepository.findById(id);
+        if (remAccById.isPresent()){
+            remAccById.get();
+            accountRepository.deleteById(id);
+        } else {
+            System.out.println("Account with id " + id + " is empty!");
+        }
+        return null;
     }
 }

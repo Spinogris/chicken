@@ -10,4 +10,6 @@ public interface AccountService {
     Account getAccountById(Long id);
 
     List<Account> getAllAccounts();
+
+    Account removeAccountById(Long id);
 }
