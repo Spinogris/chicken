@@ -1,5 +1,6 @@
 package com.chicken.de.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,26 +15,24 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "cart")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Cart {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     @Column(name = "product_id")
-    private int productId;
+    private Long productId;
 
     @Column(name = "product_name")
     private String productName;
 
-    @Column(name = "first_name")
-    private String firstName;
+    @Column(name = "quantity")
+    public int quantity;
 
-    @Column(name = "city")
-    private String city;
-
-//    @OneToMany
-//    private List<Product> products;
+    @OneToMany
+    private List<Product> products;
 
 }

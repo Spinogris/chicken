@@ -32,8 +32,7 @@ CREATE TABLE IF NOT EXISTS cart (
     id              INT NOT NULL PRIMARY KEY,
     product_id      BIGINT NOT NULL,
     product_name    VARCHAR(128) NULL,
-    first_name      VARCHAR(128) NOT NULL,
-    city            VARCHAR(128) NOT NULL,
+    quantity        INT NULL,
     FOREIGN KEY (product_id) REFERENCES products(id)
     );
 
