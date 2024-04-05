@@ -1,5 +1,6 @@
 package com.chicken.de.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,11 +9,12 @@ import java.util.Set;
 
 @Getter
 @Setter
+@Entity
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Table(name = "account_info")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class AccountInfo {
 
     @Id

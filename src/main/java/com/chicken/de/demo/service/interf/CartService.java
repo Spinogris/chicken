@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface CartService   {
     Cart addToCart(Product product, int quantity);
-//Cart removeFromCart(Long productId);
+Cart removeFromCart(Long productId);
 
 }

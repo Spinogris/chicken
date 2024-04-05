@@ -24,8 +24,8 @@ public class CartServiceImpl implements CartService {
     @Override
     public Cart addToCart(Product product, int quantity) {
         Optional<Product> productOptional = productRepository.findById(product.getId());
-        if (productOptional.isPresent()){
-            Cart cart = new Cart();
+        if (productOptional.isPresent()) {
+        Cart cart = new Cart();
             cart.setProductName(product.getName());
             cart.setProductId(product.getId());
             cart.getQuantity();
@@ -37,11 +37,13 @@ public class CartServiceImpl implements CartService {
         }
     }
 
-//    @Override
-//    public Cart removeFromCart(Long productId){
-//        Optional<Cart> cartOptional = cartRepository.findById(productId);
-//        if (){
-//        }
-//    }
+    @Override
+    public Cart removeFromCart(Long productId){
+        Optional<Cart> cartOptional = cartRepository.findById(productId);
+        if (cartOptional.isPresent()){
+            cartOptional.get();
+            CartRepository.
+        }
+    }
 
 }
