@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS cart (
 -- ==============================================================================================
 
 -- Таблица "account"
-INSERT INTO accounts (id, first_name, last_name)
+INSERT INTO  accounts (id, first_name, last_name)
 VALUES
     (1, 'Иван', 'Иванов'),
     (2, 'Петр', 'Петров'),

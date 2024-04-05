@@ -21,6 +21,6 @@ public class Role {
     private String roleName;
 
     @ManyToOne
-    private AccountInfo accountInfo;
+    private AccountPersonalData accountPersonalData;
 
 }

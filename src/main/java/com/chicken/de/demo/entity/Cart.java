@@ -1,10 +1,12 @@
 package com.chicken.de.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -13,7 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "cart")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Cart {
 
     @Id
@@ -30,7 +31,20 @@ public class Cart {
     @Column(name = "quantity")
     public int quantity;
 
+    @JsonIgnore
     @OneToMany
     private List<Product> products;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cart cart = (Cart) o;
+        return quantity == cart.quantity && Objects.equals(id, cart.id) && Objects.equals(productId, cart.productId) && Objects.equals(productName, cart.productName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, productId, productName, quantity);
+    }
 }

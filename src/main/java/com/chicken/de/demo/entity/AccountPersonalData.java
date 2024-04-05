@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "account_info")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class AccountInfo {
+public class AccountPersonalData {
 
     @Id
     @Column(name = "id")
@@ -37,10 +37,10 @@ public class AccountInfo {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "accountInfo")
+    @OneToMany(mappedBy = "accountPersonalData")
     private Set<Role> role;
 
-    @OneToOne(mappedBy = "accountInfo")
+    @OneToOne(mappedBy = "accountPersonalData")
     private Account account;
 
 }

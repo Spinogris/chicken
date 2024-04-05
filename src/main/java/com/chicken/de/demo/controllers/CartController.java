@@ -16,9 +16,15 @@ public class CartController {
     private final CartService cartService;
 
     @PostMapping("/add")
-    public ResponseEntity<Cart> addToCart(@RequestBody Product product, @RequestParam int quantity){
+    public ResponseEntity<Cart> addToCart(@RequestBody Product product, @RequestBody int quantity){
         Cart addToCart = cartService.addToCart(product, quantity);
         return new ResponseEntity<>(addToCart, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<Cart> removeFromCart(@PathVariable Product product, @RequestParam int quantity){
+        Cart remFromCart = cartService.removeFromCart(product, quantity);
+        return ResponseEntity.ok(remFromCart);
     }
 
 }

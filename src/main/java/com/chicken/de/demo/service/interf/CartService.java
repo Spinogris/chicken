@@ -6,8 +6,9 @@ import com.chicken.de.demo.entity.Product;
 
 import java.util.List;
 
-public interface CartService   {
+public interface CartService {
     Cart addToCart(Product product, int quantity);
-Cart removeFromCart(Long productId);
+
+    Cart removeFromCart(Product product, int quantity);
 
 }

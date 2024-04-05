@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @Entity
@@ -11,7 +13,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "products")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Product {
 
     @Id
@@ -29,9 +30,9 @@ public class Product {
     private String article;
 
     @Column(name = "price")
-    private double price;
+    private BigDecimal priceForUnit;
 
     @Column(name = "price_kg")
-    private Double priceKg;
+    private BigDecimal priceKg;
 
 }

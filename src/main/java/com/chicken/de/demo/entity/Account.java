@@ -26,5 +26,5 @@ public class Account {
     private String lastName;
 
     @OneToOne
-    private AccountInfo accountInfo;
+    private AccountPersonalData accountPersonalData;
 }
