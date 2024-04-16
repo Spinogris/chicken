@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -35,4 +36,16 @@ public class Product {
     @Column(name = "price_kg")
     private BigDecimal priceKg;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(id, product.id) && Objects.equals(image, product.image) && Objects.equals(name, product.name) && Objects.equals(article, product.article) && Objects.equals(priceForUnit, product.priceForUnit) && Objects.equals(priceKg, product.priceKg);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, image, name, article, priceForUnit, priceKg);
+    }
 }

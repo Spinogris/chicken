@@ -14,5 +14,5 @@ public interface ProductService {
 
     Product removeProductById(Long id);
 
-    Product searchProductByArticle(String article);
+    List<Product> searchProductsByAll(String article);
 }

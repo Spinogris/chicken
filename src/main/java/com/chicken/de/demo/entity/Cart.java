@@ -8,8 +8,6 @@ import lombok.*;
 import java.util.List;
 import java.util.Objects;
 
-@Getter
-@Setter
 @Entity
 @ToString
 @AllArgsConstructor
@@ -46,5 +44,37 @@ public class Cart {
     @Override
     public int hashCode() {
         return Objects.hash(id, productId, productName, quantity);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

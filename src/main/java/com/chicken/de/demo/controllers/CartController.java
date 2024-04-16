@@ -1,5 +1,6 @@
 package com.chicken.de.demo.controllers;
 
+import com.chicken.de.demo.DTO.ProductDTO;
 import com.chicken.de.demo.entity.Cart;
 import com.chicken.de.demo.entity.Product;
 import com.chicken.de.demo.service.interf.CartService;
@@ -13,18 +14,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/chicken/cart")
 public class CartController {
 
-    private final CartService cartService;
+    private  CartService cartService;
 
     @PostMapping("/add")
-    public ResponseEntity<Cart> addToCart(@RequestBody Product product, @RequestBody int quantity){
+    public ResponseEntity<Cart> addToCart(@RequestBody ProductDTO product, @RequestBody int quantity){
         Cart addToCart = cartService.addToCart(product, quantity);
         return new ResponseEntity<>(addToCart, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Cart> removeFromCart(@PathVariable Product product, @RequestParam int quantity){
+    public ResponseEntity<Cart> removeFromCart(@PathVariable ProductDTO product, @RequestParam int quantity){
         Cart remFromCart = cartService.removeFromCart(product, quantity);
         return ResponseEntity.ok(remFromCart);
     }
-
 }

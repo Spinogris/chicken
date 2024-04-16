@@ -1,24 +1,23 @@
 package com.chicken.de.demo.service.impl;
 
+import com.chicken.de.demo.DTO.ProductDTO;
 import com.chicken.de.demo.entity.Cart;
 import com.chicken.de.demo.entity.Product;
 import com.chicken.de.demo.repository.CartRepository;
 import com.chicken.de.demo.repository.ProductRepository;
 import com.chicken.de.demo.service.interf.CartService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class CartServiceImpl implements CartService {
 
     private final ProductRepository productRepository;
     private final CartRepository cartRepository;
 
     @Override
-    public Cart addToCart(Product product, int quantity) {
+    public Cart addToCart(ProductDTO product, int quantity) {
         Optional<Product> productOptional = productRepository.findById(product.getId());
         if (productOptional.isPresent()) {
             Cart cart = new Cart();
@@ -34,7 +33,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart removeFromCart(Product product, int quantity) {
+    public Cart removeFromCart(ProductDTO product, int quantity) {
         Optional<Cart> cartOptional = cartRepository.findById(product.getId());
         if (cartOptional.isPresent()) {
             cartOptional.get();
@@ -45,5 +44,9 @@ public class CartServiceImpl implements CartService {
         return null;
     }
 
-
+    public CartServiceImpl(ProductRepository productRepository,
+                           CartRepository cartRepository) {
+        this.productRepository = productRepository;
+        this.cartRepository = cartRepository;
+    }
 }
