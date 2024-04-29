@@ -1,10 +1,9 @@
 package com.chicken.de.demo.DTO;
 
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
+import lombok.Data;
+
+@Data
 public class AccountDTO {
     public String firstName;
     public String lastName;

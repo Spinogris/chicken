@@ -4,6 +4,7 @@ import com.chicken.de.demo.DTO.ProductDTO;
 import com.chicken.de.demo.entity.Product;
 import com.chicken.de.demo.mapper.ProductMapper;
 import com.chicken.de.demo.service.interf.ProductService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +13,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/chicken/products")
+@AllArgsConstructor
 public class ProductController {
 
 
-    private final ProductService productService;
+    private  ProductService productService;
 
     @GetMapping("/{id}")
     public ProductDTO getProdById(@PathVariable Long id){
@@ -25,7 +27,7 @@ public class ProductController {
 
     @GetMapping("/all")
     public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> products = (List<Product>) productService.getAllProducts();
+        List<Product> products = productService.getAllProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
@@ -46,9 +48,5 @@ public class ProductController {
     public ResponseEntity<List<Product>> searchProducts(@RequestParam String search){
         List<Product> products = productService.searchProductsByAll(search);
         return ResponseEntity.ok(products);
-    }
-
-    public ProductController(ProductService productService) {
-        this.productService = productService;
     }
 }
