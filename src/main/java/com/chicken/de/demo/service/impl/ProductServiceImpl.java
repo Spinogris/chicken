@@ -13,6 +13,7 @@ import jakarta.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,8 +23,13 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @NoArgsConstructor
-@AllArgsConstructor
 public class ProductServiceImpl implements ProductService {
+
+    @Autowired
+    public ProductServiceImpl(ProductRepository productRepository, EntityManager entityManager) {
+        this.productRepository = productRepository;
+        this.entityManager = entityManager;
+    }
 
     private ProductRepository productRepository;
     @PersistenceContext
