@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,8 +18,6 @@ public class ProductController {
     private final ProductService productService;
     @Autowired
     private final ProductMapper productMapper;
-
-
 
     @GetMapping("/{id}")
     public ProductDTO getProdById(@PathVariable Long id) {
@@ -35,15 +32,17 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ProductDTO removeProductById(@PathVariable Long id) {
+    public String removeProductById(@PathVariable Long id) {
         Product remProdById = productService.removeProductById(id);
-        return productMapper.toDTO(remProdById);
+        productMapper.toDTO(remProdById);
+        return "Продукт c id " + id + " удалён!";
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
+    public String saveProduct(@RequestBody Product product) {
         Product saveProduct = productService.saveProduct(product);
-        return ResponseEntity.ok(saveProduct);
+        ResponseEntity.ok(saveProduct);
+        return "Продукт c id " + product.getId() + product.getName() + " добавлен!";
     }
 
     @GetMapping("/search") // http://localhost:8080/chicken/products/search?search=ЗАПРОС

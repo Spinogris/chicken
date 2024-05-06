@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @Data
@@ -24,6 +26,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private final ProductRepository productRepository;
+    @Autowired
+    private final List<ProductRepository> PRODUCTREP = new ArrayList<>();
     @Autowired
     private final ProductMapper productMapper;
     @PersistenceContext
@@ -45,21 +49,15 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll();
     }
 
-//    @Override
-//    public Product removeProductById(Long id) {
-//        Optional<Product> productOptional = productRepository.findById(id);
-//        if (productOptional.isPresent()) {
-//            productOptional.get();
-//            productRepository.deleteById(id);
-//        } else {
-//            System.out.println("Product not available.");
-//        }
-//        return null;
-//    }
     @Override
     public Product removeProductById(Long id){
-        productRepository.deleteById(id);
-        return null;
+        Optional<Product> optionalProduct = productRepository.findById(id);
+        if (optionalProduct.isPresent()) {
+            productRepository.deleteById(id);
+            return optionalProduct.get();
+        } else {
+            throw new NoSuchElementException("Product with id " + id + " not found");
+        }
     }
 
     @Override
