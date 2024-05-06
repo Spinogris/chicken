@@ -4,7 +4,6 @@ import com.chicken.de.demo.DTO.ProductDTO;
 import com.chicken.de.demo.entity.Product;
 import com.chicken.de.demo.mapper.ProductMapper;
 import com.chicken.de.demo.service.interf.ProductService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,16 +23,15 @@ public class ProductController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> products = (List<Product>) productService.getAllProducts();
-        return new ResponseEntity<>(products, HttpStatus.OK);
+    public List<ProductDTO> getAllProducts() {
+        List<Product> products = productService.getAllProducts();
+        return ProductMapper.INSTANCE.allToDTO(products);
     }
 
-
     @DeleteMapping("/{id}")
-    public ResponseEntity<Product> removeProductById(@PathVariable Long id){
+    public ProductDTO removeProductById(@PathVariable Long id){
         Product remProdById = productService.removeProductById(id);
-        return new ResponseEntity<>(remProdById, HttpStatus.OK);
+        return ProductMapper.INSTANCE.toDTO(remProdById);
     }
 
     @PostMapping ("/save")
