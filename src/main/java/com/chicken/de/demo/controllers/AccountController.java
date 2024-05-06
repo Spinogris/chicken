@@ -4,20 +4,19 @@ import com.chicken.de.demo.DTO.AccountDTO;
 import com.chicken.de.demo.entity.Account;
 import com.chicken.de.demo.mapper.AccountMapper;
 import com.chicken.de.demo.service.interf.AccountService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-//@RequiredArgsConstructor
 @RequestMapping("/chicken/accounts")
 public class AccountController {
 
+    @Autowired
     private final AccountService accountService;
+    @Autowired
     private final AccountMapper accountMapper;
 
     @PostMapping("/save")

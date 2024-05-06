@@ -1,6 +1,5 @@
 package com.chicken.de.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -35,6 +34,54 @@ public class Product {
 
     @Column(name = "price_kg")
     private BigDecimal priceKg;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setArticle(String article) {
+        this.article = article;
+    }
+
+    public void setPriceForUnit(BigDecimal priceForUnit) {
+        this.priceForUnit = priceForUnit;
+    }
+
+    public void setPriceKg(BigDecimal priceKg) {
+        this.priceKg = priceKg;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getArticle() {
+        return article;
+    }
+
+    public BigDecimal getPriceForUnit() {
+        return priceForUnit;
+    }
+
+    public BigDecimal getPriceKg() {
+        return priceKg;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -3,13 +3,11 @@ package com.chicken.de.demo.mapper;
 import com.chicken.de.demo.DTO.AccountDTO;
 import com.chicken.de.demo.entity.Account;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface AccountMapper {
-    AccountMapper INSTANCE = Mappers.getMapper(AccountMapper.class);
 
     Account toEntity(AccountDTO accountDTO);
 

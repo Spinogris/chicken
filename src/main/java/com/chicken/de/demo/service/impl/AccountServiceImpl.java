@@ -1,6 +1,7 @@
 package com.chicken.de.demo.service.impl;
 
 import com.chicken.de.demo.entity.Account;
+import com.chicken.de.demo.mapper.AccountMapper;
 import com.chicken.de.demo.repository.AccountRepository;
 import com.chicken.de.demo.service.interf.AccountService;
 import lombok.RequiredArgsConstructor;
@@ -11,11 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
+
 
     @Override
     public Account saveAccount(Account account) {
@@ -43,5 +44,9 @@ public class AccountServiceImpl implements AccountService {
             System.out.println("Account with id " + id + " is empty!");
         }
         return null;
+    }
+
+    public AccountServiceImpl(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
     }
 }
