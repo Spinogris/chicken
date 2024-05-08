@@ -27,11 +27,10 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private final ProductRepository productRepository;
     @Autowired
-    private final List<ProductRepository> PRODUCTREP = new ArrayList<>();
-    @Autowired
     private final ProductMapper productMapper;
     @PersistenceContext
     private final EntityManager entityManager;
+
 
     @Override
     public Product saveProduct(Product product) {
