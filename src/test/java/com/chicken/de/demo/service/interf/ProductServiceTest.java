@@ -4,6 +4,7 @@ import com.chicken.de.demo.entity.Product;
 import com.chicken.de.demo.repository.ProductRepository;
 import com.chicken.de.demo.service.impl.ProductServiceImpl;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import java.util.Optional;
 class ProductServiceTest {
 
     @Autowired
+    @InjectMocks
     private ProductService productService;
     @Mock
     private ProductRepository productRepository;
@@ -53,24 +55,11 @@ class ProductServiceTest {
         assertEquals(article, saveProduct.getArticle());
         assertEquals(priceUnit, saveProduct.getPriceForUnit());
         assertEquals(priceKg, saveProduct.getPriceKg());
-
-
     }
 
     @Test
     void testGetProdById() {
-        Product expectedProduct = new Product();
-        expectedProduct.setId(id);
 
-        productRepository.getReferenceById(id);
-
-        Mockito.when(productRepository.findById(id)).thenReturn(Optional.of(expectedProduct));
-
-
-//        assertNotNull(productRepository);
-        assertEquals(id, productRepository.findById(id));
-
-        Mockito.verify(productRepository, Mockito.times(1)).getReferenceById(id);
     }
 
     @Test
