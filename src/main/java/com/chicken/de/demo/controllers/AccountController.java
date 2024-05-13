@@ -4,7 +4,10 @@ import com.chicken.de.demo.DTO.AccountDTO;
 import com.chicken.de.demo.entity.Account;
 import com.chicken.de.demo.mapper.AccountMapper;
 import com.chicken.de.demo.service.interf.AccountService;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

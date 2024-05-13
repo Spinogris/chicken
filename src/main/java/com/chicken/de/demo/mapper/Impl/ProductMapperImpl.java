@@ -25,7 +25,7 @@ public class ProductMapperImpl implements ProductMapper {
     }
 
     @Override
-    public List<ProductDTO> allToDTO(List<Product> products) {
+    public List<ProductDTO> allToDTO(@org.jetbrains.annotations.NotNull List<Product> products) {
         List<ProductDTO> productDTOS = new ArrayList<>();
         for (Product product : products){
             productDTOS.add(toDTO(product));

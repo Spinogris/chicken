@@ -1,7 +1,6 @@
 package com.chicken.de.demo.DTO;
 
 import lombok.Data;
-import lombok.Value;
 
 import java.math.BigDecimal;
 

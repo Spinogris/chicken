@@ -51,7 +51,8 @@ public class ProductController {
         return ResponseEntity.ok(products);
     }
 
-    public ProductController(ProductService productService, ProductMapper productMapper) {
+    public ProductController(ProductService productService,
+                             ProductMapper productMapper) {
         this.productService = productService;
         this.productMapper = productMapper;
     }

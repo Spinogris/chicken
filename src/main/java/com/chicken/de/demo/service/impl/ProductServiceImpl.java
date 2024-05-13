@@ -12,6 +12,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.Data;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,14 +40,25 @@ public class ProductServiceImpl implements ProductService {
         return product;
     }
 
+    @NonNull
     @Override
     public Product getProdById(Long id) {
-        return productRepository.getReferenceById(id);
+        Optional<Product> optionalProduct = productRepository.findById(id);
+        if (optionalProduct.isPresent()) {
+            return productRepository.getReferenceById(id);
+        }  else {
+            throw new NoSuchElementException("Product with id " + id + " not found");
+        }
     }
 
     @Override
     public List<Product> getAllProducts() {
-        return productRepository.findAll();
+        Optional<List<Product>> optionalProducts = Optional.of(productRepository.findAll());
+        if (optionalProducts.isPresent()) {
+            return productRepository.findAll();
+        } else {
+            throw new NoSuchElementException("Products not found");
+        }
     }
 
     @Override
