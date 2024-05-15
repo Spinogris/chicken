@@ -1,18 +1,19 @@
 package com.chicken.de.demo.service.interf;
 
-import com.chicken.de.demo.entity.Product;
+import com.chicken.de.demo.DTO.product.ProductCreateRequestDTO;
+import com.chicken.de.demo.DTO.product.ProductResponseDTO;
 
 import java.util.List;
 
 public interface ProductService {
 
-    Product saveProduct(Product product);
+    ProductResponseDTO saveProduct(ProductCreateRequestDTO product);
 
-    Product getProdById(Long id);
+    ProductResponseDTO getProdById(Long id);
 
-    List<Product> getAllProducts();
+    List<ProductResponseDTO> getAllProducts();
 
-    Product removeProductById(Long id);
+    ProductResponseDTO removeProductById(Long id);
 
-    List<Product> searchProductsByAll(String article);
+    List<ProductResponseDTO> searchProductsByAll(String article);
 }

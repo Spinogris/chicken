@@ -1,6 +1,6 @@
 package com.chicken.de.demo.service.impl;
 
-import com.chicken.de.demo.DTO.ProductDTO;
+import com.chicken.de.demo.DTO.product.ProductDTO;
 import com.chicken.de.demo.entity.Cart;
 import com.chicken.de.demo.entity.Product;
 import com.chicken.de.demo.repository.CartRepository;

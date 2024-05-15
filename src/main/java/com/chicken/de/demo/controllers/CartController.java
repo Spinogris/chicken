@@ -1,8 +1,7 @@
 package com.chicken.de.demo.controllers;
 
-import com.chicken.de.demo.DTO.ProductDTO;
+import com.chicken.de.demo.DTO.product.ProductDTO;
 import com.chicken.de.demo.entity.Cart;
-import com.chicken.de.demo.entity.Product;
 import com.chicken.de.demo.service.interf.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,7 @@
 package com.chicken.de.demo.service.interf;
 
 
-import com.chicken.de.demo.DTO.ProductDTO;
+import com.chicken.de.demo.DTO.product.ProductDTO;
 import com.chicken.de.demo.entity.Cart;
 
 public interface CartService {

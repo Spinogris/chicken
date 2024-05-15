@@ -1,20 +1,19 @@
 package com.chicken.de.demo.mapper.Impl;
 
-import com.chicken.de.demo.DTO.ProductDTO;
+import com.chicken.de.demo.DTO.product.ProductCreateRequestDTO;
+import com.chicken.de.demo.DTO.product.ProductResponseDTO;
 import com.chicken.de.demo.entity.Product;
 import com.chicken.de.demo.mapper.ProductMapper;
-import lombok.Data;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-@Data
+@Component
 public class ProductMapperImpl implements ProductMapper {
     @Override
-    public ProductDTO toDTO(Product product) {
-        ProductDTO productDTO = new ProductDTO();
+    public ProductResponseDTO toDTO(Product product) {
+        ProductResponseDTO productDTO = new ProductResponseDTO();
         productDTO.setId(product.getId());
         productDTO.setImage(product.getImage());
         productDTO.setName(product.getName());
@@ -25,8 +24,19 @@ public class ProductMapperImpl implements ProductMapper {
     }
 
     @Override
-    public List<ProductDTO> allToDTO(List<Product> products) {
-        List<ProductDTO> productDTOS = new ArrayList<>();
+    public Product toEntity(ProductCreateRequestDTO productCreateRequestDTO) {
+        Product product = new Product();
+        product.setImage(productCreateRequestDTO.getImage());
+        product.setName(productCreateRequestDTO.getName());
+        product.setArticle(productCreateRequestDTO.getArticle());
+        product.setPriceForUnit(productCreateRequestDTO.getPriceForUnit());
+        product.setPriceKg(productCreateRequestDTO.getPriceKg());
+        return product;
+    }
+
+    @Override
+    public List<ProductResponseDTO> allToDTO(List<Product> products) {
+        List<ProductResponseDTO> productDTOS = new ArrayList<>();
         for (Product product : products){
             productDTOS.add(toDTO(product));
         }
