@@ -1,6 +1,6 @@
 package com.chicken.de.demo.controllers;
 
-import com.chicken.de.demo.DTO.AccountDTO;
+import com.chicken.de.demo.DTO.account.AccountDTO;
 import com.chicken.de.demo.entity.Account;
 import com.chicken.de.demo.mapper.AccountMapper;
 import com.chicken.de.demo.service.interf.AccountService;
@@ -37,7 +37,7 @@ public class AccountController {
     @GetMapping("/all")
     public ResponseEntity<List<AccountDTO>> allAccounts(){
         List<Account> allAccounts = accountService.getAllAccounts();
-        List<AccountDTO> allAccountsDTO = accountMapper.toDTOList(allAccounts);
+        List<AccountDTO> allAccountsDTO = accountMapper.allToDTO(allAccounts);
         return ResponseEntity.ok(allAccountsDTO);
     }
 

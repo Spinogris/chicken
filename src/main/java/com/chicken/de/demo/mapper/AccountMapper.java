@@ -1,6 +1,8 @@
 package com.chicken.de.demo.mapper;
 
-import com.chicken.de.demo.DTO.AccountDTO;
+import com.chicken.de.demo.DTO.account.AccountCreateRequestDTO;
+import com.chicken.de.demo.DTO.account.AccountDTO;
+import com.chicken.de.demo.DTO.account.AccountResponceDTO;
 import com.chicken.de.demo.entity.Account;
 import org.mapstruct.Mapper;
 
@@ -9,9 +11,9 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface AccountMapper {
 
-    Account toEntity(AccountDTO accountDTO);
+    AccountResponceDTO toDTO(Account account);
 
-    AccountDTO toDTO(Account saveAcc);
+    Account toEntity(AccountCreateRequestDTO accountCreateRequestDTO);
 
-    List<AccountDTO> toDTOList(List<Account> allAccounts);
+    List<AccountResponceDTO> allToDTO(List<Account> accounts);
 }

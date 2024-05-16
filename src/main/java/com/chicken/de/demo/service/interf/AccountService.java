@@ -1,15 +1,18 @@
 package com.chicken.de.demo.service.interf;
 
-import com.chicken.de.demo.entity.Account;
+import com.chicken.de.demo.DTO.account.AccountCreateRequestDTO;
+import com.chicken.de.demo.DTO.account.AccountResponceDTO;
 
 import java.util.List;
 
 public interface AccountService {
 
-    Account saveAccount(Account account);
-    Account getAccountById(Long id);
+    AccountResponceDTO saveAccount(AccountCreateRequestDTO account);
+    AccountResponceDTO getAccountById(Long id);
 
-    List<Account> getAllAccounts();
+    List<AccountResponceDTO> getAllAccounts();
 
-    Account removeAccountById(Long id);
+    AccountResponceDTO removeAccountById(Long id);
+
+    List<AccountResponceDTO> searchAccountById(String name);
 }

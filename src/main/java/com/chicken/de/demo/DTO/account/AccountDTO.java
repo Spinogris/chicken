@@ -1,4 +1,4 @@
-package com.chicken.de.demo.DTO;
+package com.chicken.de.demo.DTO.account;
 
 import lombok.Getter;
 import lombok.Setter;
