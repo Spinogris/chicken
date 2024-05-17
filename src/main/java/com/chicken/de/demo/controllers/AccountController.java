@@ -1,11 +1,11 @@
 package com.chicken.de.demo.controllers;
 
-import com.chicken.de.demo.DTO.account.AccountDTO;
-import com.chicken.de.demo.entity.Account;
-import com.chicken.de.demo.mapper.AccountMapper;
+import com.chicken.de.demo.DTO.account.AccountCreateRequestDTO;
+import com.chicken.de.demo.DTO.account.AccountResponceDTO;
 import com.chicken.de.demo.service.interf.AccountService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,40 +16,37 @@ public class AccountController {
 
     @Autowired
     private final AccountService accountService;
-    @Autowired
-    private final AccountMapper accountMapper;
 
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/save")
-    public ResponseEntity<AccountDTO> saveAccount(@RequestBody AccountDTO accountDTO){
-        Account account = accountMapper.toEntity(accountDTO);
-        Account saveAcc = accountService.saveAccount(account);
-        AccountDTO saveAccDTO = accountMapper.toDTO(saveAcc);
-        return ResponseEntity.ok(saveAccDTO);
+    public AccountResponceDTO saveAccount(@Valid @RequestBody AccountCreateRequestDTO account){
+        return accountService.saveAccount(account);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AccountDTO> getAccountById(@PathVariable Long id){
-        Account accountById = accountService.getAccountById(id);
-        AccountDTO accountDTO = accountMapper.toDTO(accountById);
-        return ResponseEntity.ok(accountDTO);
+    public AccountResponceDTO getAccountById(@PathVariable Long id){
+        return accountService.getAccountById(id);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/all")
-    public ResponseEntity<List<AccountDTO>> allAccounts(){
-        List<Account> allAccounts = accountService.getAllAccounts();
-        List<AccountDTO> allAccountsDTO = accountMapper.allToDTO(allAccounts);
-        return ResponseEntity.ok(allAccountsDTO);
+    public List<AccountResponceDTO> allAccounts(){
+        return accountService.getAllAccounts();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<AccountDTO> removeAccountById(@PathVariable Long id){
-        Account remAccById = accountService.removeAccountById(id);
-        AccountDTO remAccByIdDTO = accountMapper.toDTO(remAccById);
-        return ResponseEntity.ok(remAccByIdDTO);
+    public AccountResponceDTO removeAccountById(@PathVariable Long id){
+        return accountService.removeAccountById(id);
     }
 
-    public AccountController(AccountService accountService, AccountMapper accountMapper) {
-        this.accountService = accountService;
-        this.accountMapper = accountMapper;
+    @PreAuthorize("hasRole('ROLE_ADMIN, ROLE_MANAGER')")
+    @GetMapping("/search")
+    public List<AccountResponceDTO> searchAccounts(@RequestParam String search){
+        return accountService.searchAccounts(search);
     }
 }

@@ -3,6 +3,7 @@ package com.chicken.de.demo.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 
 @Getter
 @Setter
@@ -12,7 +13,7 @@ import lombok.*;
 @AllArgsConstructor
 @Table(name = "accounts")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Account {
+public class Account{
 
     @Id
     @Column(name = "id")

@@ -6,6 +6,7 @@ import com.chicken.de.demo.mapper.ProductMapper;
 import com.chicken.de.demo.service.interf.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,12 +17,14 @@ public class ProductController {
 
     @Autowired
     private final ProductService productService;
-    @Autowired
-    private final ProductMapper productMapper;
 
-    public ProductController(ProductService productService, ProductMapper productMapper) {
+    public ProductController(ProductService productService) {
         this.productService = productService;
-        this.productMapper = productMapper;
+    }
+    @PreAuthorize("hasRole('ROLE_ADMIN, ROLE_MANAGER')")
+    @PostMapping("/save")
+    public ProductResponseDTO saveProduct(@Valid @RequestBody ProductCreateRequestDTO product) {
+        return productService.saveProduct(product);
     }
 
     @GetMapping("/{id}")
@@ -34,16 +37,13 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN, ROLE_MANAGER')")
     @DeleteMapping("/{id}")
     public String removeProductById(@PathVariable Long id) {
         productService.removeProductById(id);
         return "Продукт c id " + id + productService.getProdById(id).getName() + " удалён!";
     }
 
-    @PostMapping("/save")
-    public ProductResponseDTO saveProduct(@Valid @RequestBody ProductCreateRequestDTO product) {
-        return productService.saveProduct(product);
-    }
 
     @GetMapping("/search") // http://localhost:8080/chicken/products/search?search=ЗАПРОС
     public List<ProductResponseDTO> searchProducts(@RequestParam String search) {

@@ -7,6 +7,9 @@ import com.chicken.de.demo.mapper.AccountMapper;
 import com.chicken.de.demo.repository.AccountRepository;
 import com.chicken.de.demo.service.interf.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AccountServiceImpl implements AccountService {
+public class AccountServiceImpl implements AccountService, UserDetailsService {
 
     @Autowired
     private final AccountRepository accountRepository;
@@ -56,8 +59,15 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<AccountResponceDTO> searchAccountById(String name) {
+    public List<AccountResponceDTO> searchAccounts(String name) {
         List<Account> accountList = accountRepository.searchAccountsByAll(name);
         return accountMapper.allToDTO(accountList);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return accountRepository.findByAccountPersonalData_Name(username)
+                .orElseThrow(()-> new UsernameNotFoundException("Don't find user by username" + username))
+                .getAccountPersonalData();
     }
 }

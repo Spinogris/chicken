@@ -14,5 +14,5 @@ public interface AccountService {
 
     AccountResponceDTO removeAccountById(Long id);
 
-    List<AccountResponceDTO> searchAccountById(String name);
+    List<AccountResponceDTO> searchAccounts(String name);
 }
