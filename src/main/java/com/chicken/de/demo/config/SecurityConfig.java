@@ -95,14 +95,4 @@ public class SecurityConfig {
                 .paths(buildAuthenticationPath())
                 .info(new Info().title("Belpool API").version("0.1"));
     }
-
-    @Bean
-    public WebMvcConfigurer cors() { // чтобы можно было посылать запросы с других доменов
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("*");
-            }
-        };
-    }
 }
