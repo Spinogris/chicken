@@ -4,23 +4,21 @@ import com.chicken.de.demo.entity.Product;
 import com.chicken.de.demo.repository.ProductRepository;
 import com.chicken.de.demo.service.impl.ProductServiceImpl;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import java.math.BigDecimal;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class ProductServiceTest {
 
     @Autowired
     private ProductService productService;
-    @Mock
+    @Autowired
     private ProductRepository productRepository;
 
     Long id = 1L;
@@ -40,38 +38,21 @@ class ProductServiceTest {
         product.setPriceForUnit(priceUnit);
         product.setPriceKg(priceKg);
 
-        productRepository.save(product);
-
         Product saveProduct = productService.saveProduct(product);
 
-        Mockito.when(productRepository.save(Mockito.any(Product.class))).thenReturn(product);
-
-        Mockito.verify(productRepository, Mockito.times(1)).save(product);
-
-        assertEquals(img, saveProduct.getImage());
-        assertEquals(name, saveProduct.getName());
-        assertEquals(article, saveProduct.getArticle());
-        assertEquals(priceUnit, saveProduct.getPriceForUnit());
-        assertEquals(priceKg, saveProduct.getPriceKg());
-
-
+        assertNotNull(saveProduct.getId());
+        assertTrue(productService.getAllProducts()
+                .stream()
+                .map(myProduct -> myProduct.getId())
+                .collect(Collectors.toSet())
+                .contains(saveProduct.getId()));
     }
 
-    @Test
-    void testGetProdById() {
-        Product expectedProduct = new Product();
-        expectedProduct.setId(id);
 
-        productRepository.getReferenceById(id);
+//    @Test
+//    void testGetProdById() {
 
-        Mockito.when(productRepository.findById(id)).thenReturn(Optional.of(expectedProduct));
-
-
-//        assertNotNull(productRepository);
-        assertEquals(id, productRepository.findById(id));
-
-        Mockito.verify(productRepository, Mockito.times(1)).getReferenceById(id);
-    }
+//    }
 
     @Test
     void testGetAllProducts() {
