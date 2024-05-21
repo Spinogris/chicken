@@ -71,7 +71,7 @@ VALUES
 INSERT INTO roles (id, role_name)
 VALUES
     (1, 'ROLE_USER'),
-    (2, 'ROLE_ADMIN');
+    (2, 'ROLE_ADMIN'),
     (3, 'ROLE_MANAGER');
 
 -- Таблица "cart" в данном случае не требует заполнения, поскольку она будет заполняться с учетом действий пользователей.
