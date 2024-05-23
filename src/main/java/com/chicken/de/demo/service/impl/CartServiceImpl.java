@@ -17,7 +17,7 @@ public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
 
     @Override
-    public Cart addToCart(ProductDTO product, int quantity) {
+    public Cart addToCart(ProductDTO product, int quantity) { // todo найити корзину юзера а потом ...
         Optional<Product> productOptional = productRepository.findById(product.getId());
         if (productOptional.isPresent()) {
             Cart cart = new Cart();

@@ -47,6 +47,9 @@ public class AccountPersonalData implements UserDetails {
     @OneToOne(mappedBy = "accountPersonalData")
     private Account account;
 
+    @OneToOne(mappedBy = "") // todo
+    private Cart cart;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return role.stream()
