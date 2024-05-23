@@ -64,6 +64,7 @@ public class SecurityConfig {
 //                .authenticationManager(authenticationManager)
 //                .build();
 //    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
         return http
@@ -77,7 +78,6 @@ public class SecurityConfig {
                 .authenticationManager(authenticationManager)       // Устанавливает кастомный AuthenticationManager для обработки аутентификации.
                 .build();       // Метод build() завершает конфигурацию и создаёт объект SecurityFilterChain, который будет применён ко всем запросам.
     }
-
 
     @Bean
     public OpenAPI openAPI() //(@Value("${base.url}") String baseUrl)
