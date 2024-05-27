@@ -35,6 +35,30 @@ import static com.chicken.de.demo.documentation.OpenApiDocumentation.buildAuthen
 @EnableGlobalMethodSecurity(prePostEnabled = true) //todo прочитать что это?
 public class SecurityConfig {
 
+    private static final String[] SWAGGER = {
+            "/v2/api-docs",
+            "/v3/api-docs/",
+            "/swagger-resources/",
+            "/swagger-resources",
+            "/swagger-ui/",
+            "/swagger-ui.html",
+            "/swagger-ui/",
+            "/webjars/",
+            "/configuration/",
+            "/configuration/ui",
+            "/swagger-ui/**", "/v3/api-docs/**",
+            "/configuration/security",
+            "/public",
+            "/favicon.ico",
+            "/h2-console/",
+            "/conferenc/v1/swagger-ui.html",
+            "/swagger-resources/configuration/ui",
+            "/swagger-resources/configuration/security",
+            "/",
+            "/login", "/logout",
+            "/csrf"
+    };
+
     private final UserDetailsService userDetailsService;
 
     @Bean
@@ -51,48 +75,17 @@ public class SecurityConfig {
         return new ProviderManager(daoAuthenticationProvider);
     }
 
-    //    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
-//        return http
-//                .csrf() // защита от перекрёстных вызовов. Чтобы другие приложения не могли дёрнуть мою апп. // .disable() чтобы отключтить csrf
-//                .disable()
-//                .authorizeHttpRequests(authorize -> authorize
-//                        .requestMatchers("/auth/login", "/auth/registration", "/error").permitAll()
-//                        .anyRequest().authenticated())
-//                .httpBasic(Customizer.withDefaults())
-//                .logout(Customizer.withDefaults())
-//                .authenticationManager(authenticationManager)
-//                .build();
-//    }
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
         return http
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))        // Устанавливает репозиторий для хранения CSRF токенов в cookie. withHttpOnlyFalse() указывает, что cookie не будет иметь флаг HttpOnly, что позволяет JavaScript на клиенте получить доступ к этому cookie (не рекомендуется в большинстве случаев для безопасности).
-                .authorizeHttpRequests(authorize -> authorize       // Включает настройку авторизации запросов.
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/auth/login", "/auth/registration", "/error").permitAll()     // Позволяет всем пользователям (включая неавторизованных) доступ к указанным URL.
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(SWAGGER).permitAll()// Включает настройку авторизации запросов.
                         .anyRequest().authenticated())      // Все остальные запросы требуют аутентификации.
                 .httpBasic(Customizer.withDefaults())       // Включает HTTP Basic аутентификацию с настройками по умолчанию. Это простая форма аутентификации, которая передаёт имя пользователя и пароль в заголовке HTTP запроса.
                 .logout(Customizer.withDefaults())      // Пользователь будет разлогинен
                 .authenticationManager(authenticationManager)       // Устанавливает кастомный AuthenticationManager для обработки аутентификации.
                 .build();       // Метод build() завершает конфигурацию и создаёт объект SecurityFilterChain, который будет применён ко всем запросам.
-    }
-
-    @Bean
-    public OpenAPI openAPI() //(@Value("${base.url}") String baseUrl)
-    {
-        ResolvedSchema resolvedSchema = ModelConverters.getInstance()
-                .resolveAsResolvedSchema(
-                        new AnnotatedType(StandardResponseDto.class).resolveAsRef(false));
-
-        return new OpenAPI()
-                .components(new Components()
-                        .addSchemas("EmailAndPassword", emailAndPassword())
-                        .addSecuritySchemes("cookieAuth", securityScheme())
-                        .addSchemas("StandardResponseDto", resolvedSchema.schema.description("StandardResponseDto")))
-                .addSecurityItem(buildSecurity())
-                .paths(buildAuthenticationPath())
-                .info(new Info().title("Belpool API").version("0.1"));
     }
 }
