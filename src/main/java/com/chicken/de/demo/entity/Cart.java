@@ -17,7 +17,7 @@ public class Cart {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "product_id")
@@ -31,9 +31,11 @@ public class Cart {
 
     @JsonIgnore
     @OneToMany
+    @JoinColumn(name = "card_id")
     private List<Product> products;
 
     @OneToOne
+    @JoinColumn(name = "account_personal_data_id")
     private AccountPersonalData accountPersonalData;
 
     @Override

@@ -25,7 +25,8 @@ public class Account {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_personal_data_id", referencedColumnName = "id")
     private AccountPersonalData accountPersonalData;
 
     public Account(Long id,

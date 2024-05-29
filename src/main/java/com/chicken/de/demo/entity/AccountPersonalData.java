@@ -41,10 +41,10 @@ public class AccountPersonalData implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "accountPersonalData")
-    private Set<Role> role;
+    @OneToMany(mappedBy = "accountPersonalData", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Role> roles;
 
-    @OneToOne(mappedBy = "accountPersonalData")
+    @OneToOne(mappedBy = "accountPersonalData", cascade = CascadeType.ALL)
     private Account account;
 
     @OneToOne(mappedBy = "accountPersonalData") // todo
@@ -52,7 +52,7 @@ public class AccountPersonalData implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return role.stream()
+        return roles.stream()
                 .map(r -> new SimpleGrantedAuthority(r.getRoleName()))
                 .toList();
     }

@@ -3,6 +3,7 @@ package com.chicken.de.demo.service.impl;
 import com.chicken.de.demo.DTO.account.AccountCreateRequestDTO;
 import com.chicken.de.demo.DTO.account.AccountResponceDTO;
 import com.chicken.de.demo.entity.Account;
+import com.chicken.de.demo.entity.AccountPersonalData;
 import com.chicken.de.demo.mapper.AccountMapper;
 import com.chicken.de.demo.repository.AccountRepository;
 import com.chicken.de.demo.service.interf.AccountService;
@@ -33,6 +34,16 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
     @Transactional
     public AccountResponceDTO saveAccount(AccountCreateRequestDTO accountDTO) {
         Account account = accountMapper.toEntity(accountDTO);
+
+        AccountPersonalData personalData = new AccountPersonalData();
+        personalData.setName(accountDTO.getFirstName() + " " + accountDTO.getLastName());
+        personalData.setEmail(accountDTO.getEmail());
+        personalData.setPhoneNumber(accountDTO.getPhoneNumber());
+        personalData.setCity(accountDTO.getCity());
+        personalData.setPassword("password");
+
+        account.setAccountPersonalData(personalData);
+
         Account saveAccount = accountRepository.save(account);
         return accountMapper.toDTO(saveAccount);
     }

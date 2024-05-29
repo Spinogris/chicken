@@ -23,5 +23,7 @@ public class AccountCreateRequestDTO {
     public String phoneNumber;
     @NonNull
     public String city;
+    @NonNull
+    public String password;
 
 }

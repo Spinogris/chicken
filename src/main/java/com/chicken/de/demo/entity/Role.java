@@ -13,14 +13,15 @@ import lombok.ToString;
 public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "role_name")
+    @Column(name = "role_name", nullable = false)
     private String roleName;
 
     @ManyToOne
+    @JoinColumn(name = "account_personal_data_id")
     private AccountPersonalData accountPersonalData;
 
 }

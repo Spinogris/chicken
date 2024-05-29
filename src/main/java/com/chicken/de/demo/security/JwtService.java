@@ -31,7 +31,7 @@ public class JwtService {
         if (userDetails instanceof Account accountEntity) {
             claims.put("userId", accountEntity);
             claims.put("login", accountEntity.getAccountPersonalData().getEmail());
-            claims.put("role", accountEntity.getAccountPersonalData().getRole());
+            claims.put("role", accountEntity.getAccountPersonalData().getRoles());
         }
         return generateToken(claims, userDetails);
     }
