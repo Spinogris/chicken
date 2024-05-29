@@ -17,7 +17,7 @@ public class Cart {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "product_id")
@@ -32,6 +32,9 @@ public class Cart {
     @JsonIgnore
     @OneToMany
     private List<Product> products;
+
+    @OneToOne
+    private AccountPersonalData accountPersonalData;
 
     @Override
     public boolean equals(Object o) {

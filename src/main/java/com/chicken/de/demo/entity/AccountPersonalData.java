@@ -47,7 +47,7 @@ public class AccountPersonalData implements UserDetails {
     @OneToOne(mappedBy = "accountPersonalData")
     private Account account;
 
-    @OneToOne(mappedBy = "") // todo
+    @OneToOne(mappedBy = "accountPersonalData") // todo
     private Cart cart;
 
     @Override
