@@ -4,7 +4,7 @@ create table IF NOT EXISTS accounts (
     last_name    varchar(128) null
 );
 
-create table IF NOT EXISTS account_info (
+create table IF NOT EXISTS account_personal_data (
     id int not null primary key,
     name         varchar(128) null,
     email        varchar(128) null,
@@ -42,16 +42,16 @@ CREATE TABLE IF NOT EXISTS cart (
 -- Таблица "account"
 INSERT INTO  accounts (id, first_name, last_name)
 VALUES
-    (1, 'Иван', 'Иванов'),
-    (2, 'Петр', 'Петров'),
-    (3, 'Мария', 'Сидорова');
+    (1, 'Ivan', 'Ivanov'),
+    (2, 'Petr', 'Petrov'),
+    (3, 'Maria', 'Sidorova');
 
 -- Таблица "account_info"
-INSERT INTO account_info (id, name, email, city, phone_number, password)
+INSERT INTO account_personal_data (id, name, email, city, phone_number, password)
 VALUES
-    (1, 'Иван Иванов', 'ivan@example.com', 'Altötting', '+7 (123) 456-78-90', 'password123'),
-    (2, 'Петр Петров', 'petr@example.com', 'Garching', '+7 (987) 654-32-10', 'qwerty456'),
-    (3, 'Мария Сидорова', 'maria@example.com', 'Traunreut', '+7 (111) 222-33-44', 'securepass123');
+    (1, 'Ivan', 'ivan@example.com', 'Altötting', '+7 (123) 456-78-90', 'password123'),
+    (2, 'Petr', 'petr@example.com', 'Garching', '+7 (987) 654-32-10', 'qwerty456'),
+    (3, 'Maria', 'maria@example.com', 'Traunreut', '+7 (111) 222-33-44', 'securepass123');
 
 -- Таблица "product"
 INSERT INTO products (id, image, article, name, price, price_kg)

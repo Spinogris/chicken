@@ -17,13 +17,13 @@ import java.util.Set;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "account_info")
+@Table(name = "account_personal_data")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class AccountPersonalData implements UserDetails {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "name", nullable = false)
