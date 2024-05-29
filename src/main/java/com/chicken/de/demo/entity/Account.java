@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServic
 @Entity
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "accounts")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Account{
@@ -28,4 +27,14 @@ public class Account{
 
     @OneToOne
     private AccountPersonalData accountPersonalData;
+
+    public Account(Long id,
+                   String firstName,
+                   String lastName,
+                   AccountPersonalData accountPersonalData) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.accountPersonalData = accountPersonalData;
+    }
 }

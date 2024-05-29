@@ -2,16 +2,23 @@ package com.chicken.de.demo.controllers;
 
 import com.chicken.de.demo.DTO.account.AccountCreateRequestDTO;
 import com.chicken.de.demo.DTO.account.AccountResponceDTO;
+import com.chicken.de.demo.entity.Account;
+import com.chicken.de.demo.security.AuthenticationService;
+import com.chicken.de.demo.security.model.JwtAuthenticationResponse;
+import com.chicken.de.demo.security.model.SignInRequest;
 import com.chicken.de.demo.service.interf.AccountService;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,26 +27,20 @@ import java.util.List;
 @RestController
 @RequestMapping("/chicken/accounts")
 public class AccountController {
-    //    @Operation(summary = "Регистрация пользователя", description = "Доступно всем. По умолчанию роль - USER")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "201",
-//                    description = "Пользователь зарегистрирован",
-//                    content = @Content(mediaType = "application/json",
-//                            schema = @Schema(implementation = AccountResponceDTO.class))),
-//            @ApiResponse(responseCode = "400",
-//                    description = "Ошибка валидации",
-//                    content = @Content(mediaType = "application/json",
-//                            schema = @Schema(implementation = ValidationErrorsDto.class))),
-//            @ApiResponse(responseCode = "409",
-//                    description = "Пользователь с таким email уже есть",
-//                    content = @Content(mediaType = "application/json",
-//                            schema = @Schema(implementation = StandardResponseDto.class))),
-//    })
+
     @Autowired
     private final AccountService accountService;
 
-    public AccountController(AccountService accountService) {
+    private final AuthenticationService authenticationService;
+
+//    private final PasswordEncoder passwordEncoder;
+
+    public AccountController(AccountService accountService,
+                             AuthenticationService authenticationService,
+                             PasswordEncoder passwordEncoder) {
         this.accountService = accountService;
+        this.authenticationService = authenticationService;
+//        this.passwordEncoder = passwordEncoder;
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -72,5 +73,10 @@ public class AccountController {
     @GetMapping("/search")
     public List<AccountResponceDTO> searchAccounts(@RequestParam String search) {
         return accountService.searchAccounts(search);
+    }
+
+    @PostMapping
+    public JwtAuthenticationResponse login(@RequestBody SignInRequest request){
+        return authenticationService.authenticate(request);
     }
 }
