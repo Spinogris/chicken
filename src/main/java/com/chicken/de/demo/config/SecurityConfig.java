@@ -18,6 +18,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -80,8 +81,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
         return http
-                .csrf(csrf -> csrf
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))        // Устанавливает репозиторий для хранения CSRF токенов в cookie. withHttpOnlyFalse() указывает, что cookie не будет иметь флаг HttpOnly, что позволяет JavaScript на клиенте получить доступ к этому cookie (не рекомендуется в большинстве случаев для безопасности).
+                .csrf(AbstractHttpConfigurer::disable)
+//                .csrf(csrf -> csrf
+//                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))        // Устанавливает репозиторий для хранения CSRF токенов в cookie. withHttpOnlyFalse() указывает, что cookie не будет иметь флаг HttpOnly, что позволяет JavaScript на клиенте получить доступ к этому cookie (не рекомендуется в большинстве случаев для безопасности).
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(SWAGGER).permitAll()// Включает настройку авторизации запросов.
                         .requestMatchers("/chicken/accounts/login").permitAll()
