@@ -26,22 +26,23 @@ import java.util.List;
 @Tags(@Tag(name = "account"))
 @RestController
 @RequestMapping("/chicken/accounts")
+@RequiredArgsConstructor
 public class AccountController {
 
-    @Autowired
+//    @Autowired
     private final AccountService accountService;
 
     private final AuthenticationService authenticationService;
 
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public AccountController(AccountService accountService,
-                             AuthenticationService authenticationService,
-                             PasswordEncoder passwordEncoder) {
-        this.accountService = accountService;
-        this.authenticationService = authenticationService;
+//    public AccountController(AccountService accountService,
+//                             AuthenticationService authenticationService,
+//                             PasswordEncoder passwordEncoder) {
+//        this.accountService = accountService;
+//        this.authenticationService = authenticationService;
 //        this.passwordEncoder = passwordEncoder;
-    }
+//    }
 
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "регистрация пользователя", description = "Доступ ROLE_ADMIN")
@@ -75,7 +76,7 @@ public class AccountController {
         return accountService.searchAccounts(search);
     }
 
-    @PostMapping
+    @PostMapping("/login")
     public JwtAuthenticationResponse login(@RequestBody SignInRequest request){
         return authenticationService.authenticate(request);
     }

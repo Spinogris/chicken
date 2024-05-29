@@ -15,6 +15,7 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,7 +33,8 @@ import static com.chicken.de.demo.documentation.OpenApiDocumentation.buildAuthen
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableGlobalMethodSecurity(prePostEnabled = true) //todo прочитать что это?
+//@EnableGlobalMethodSecurity(prePostEnabled = true) //todo прочитать что это?
+@EnableMethodSecurity
 public class SecurityConfig {
 
     private static final String[] SWAGGER = {
@@ -63,8 +65,8 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-//        return NoOpPasswordEncoder.getInstance(); // Не зашифрованный
-        return new BCryptPasswordEncoder(); // Зашифрованный
+        return NoOpPasswordEncoder.getInstance(); // Не зашифрованный
+        //return new BCryptPasswordEncoder(); // Зашифрованный
     }
 
     @Bean
@@ -82,7 +84,8 @@ public class SecurityConfig {
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))        // Устанавливает репозиторий для хранения CSRF токенов в cookie. withHttpOnlyFalse() указывает, что cookie не будет иметь флаг HttpOnly, что позволяет JavaScript на клиенте получить доступ к этому cookie (не рекомендуется в большинстве случаев для безопасности).
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(SWAGGER).permitAll()// Включает настройку авторизации запросов.
-                        .anyRequest().authenticated())      // Все остальные запросы требуют аутентификации.
+                        .requestMatchers("/chicken/accounts/login").permitAll()
+                        .anyRequest().permitAll()) //authenticated())      // Все остальные запросы требуют аутентификации.
                 .httpBasic(Customizer.withDefaults())       // Включает HTTP Basic аутентификацию с настройками по умолчанию. Это простая форма аутентификации, которая передаёт имя пользователя и пароль в заголовке HTTP запроса.
                 .logout(Customizer.withDefaults())      // Пользователь будет разлогинен
                 .authenticationManager(authenticationManager)       // Устанавливает кастомный AuthenticationManager для обработки аутентификации.
