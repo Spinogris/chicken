@@ -2,7 +2,6 @@ package com.chicken.de.demo.controllers;
 
 import com.chicken.de.demo.DTO.product.ProductCreateRequestDTO;
 import com.chicken.de.demo.DTO.product.ProductResponseDTO;
-import com.chicken.de.demo.mapper.ProductMapper;
 import com.chicken.de.demo.service.interf.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -23,14 +22,14 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @Operation(summary = "Сохраняет продукт. Id не Автогенерация", description = "Доступно MANAGER, ADMIN")
+    @Operation(summary = "Сохраняет продукт. Id автогенерируется", description = "Доступно MANAGER, ADMIN")
     @PreAuthorize("hasRole('ROLE_ADMIN, ROLE_MANAGER')")
-    @PostMapping("/save")
-    public ProductResponseDTO saveProduct(@Valid @RequestBody ProductCreateRequestDTO product) {
+    @PostMapping("/create")
+    public ProductResponseDTO createProduct(@Valid @RequestBody ProductCreateRequestDTO product) {
         return productService.saveProduct(product);
     }
 
-    @Operation(summary = "Список продуктов по id", description = "Доступно MANAGER, ADMIN")
+    @Operation(summary = "Список продукта по id", description = "Доступно MANAGER, ADMIN")
     @GetMapping("/{id}")
     public ProductResponseDTO getProdById(@PathVariable Long id) {
         return productService.getProdById(id);
@@ -44,13 +43,14 @@ public class ProductController {
 
     @Operation(summary = "Удаление продукта по id", description = "Доступно для ADMIN, MANAGER")
     @PreAuthorize("hasRole('ROLE_ADMIN, ROLE_MANAGER')")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public String removeProductById(@PathVariable Long id) {
         productService.removeProductById(id);
         return "Продукт c id " + id + productService.getProdById(id).getName() + " удалён!";
     }
 
-    @Operation(summary = "Поиск продукта по name, article", description = "Доступно для USER")
+    @Operation(summary = "Поиск продукта по name, article",
+            description = "Доступно для USER. http://localhost:8080/chicken/products/search?search=ЗАПРОС")
     @GetMapping("/search") // http://localhost:8080/chicken/products/search?search=ЗАПРОС
     public List<ProductResponseDTO> searchProducts(@RequestParam String search) {
         return productService.searchProductsByAll(search);

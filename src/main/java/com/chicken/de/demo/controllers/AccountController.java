@@ -32,26 +32,28 @@ public class AccountController {
     private final PasswordEncoder passwordEncoder;
 
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "регистрация пользователя", description = "Доступ ROLE_ADMIN")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Operation(summary = "регистрация пользователя", description = "Доступ ALL")
     @PostMapping("/auth/registration")
     public AccountResponceDTO saveAccount(@Valid @RequestBody AccountCreateRequestDTO account) {
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         return accountService.saveAccount(account);
     }
 
-
+    @Operation(summary = "Поиск USER по id", description = "Доступ у ROLE_ADMIN, ROLE_MANAGER")
+    @PreAuthorize("hasRole('ROLE_ADMIN, ROLE_MANAGER')")
     @GetMapping("/{id}")
     public AccountResponceDTO getAccountById(@PathVariable Long id) {
         return accountService.getAccountById(id);
     }
 
+    @Operation(summary = "Просмотр всех USERS", description = "Доступно ROLE_ADMIN")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
     public List<AccountResponceDTO> allAccounts() {
         return accountService.getAllAccounts();
     }
 
+    @Operation(summary = "Удаление аккаунта", description = "Доступно ROLE_ADMIN")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public AccountResponceDTO removeAccountById(@PathVariable Long id) {

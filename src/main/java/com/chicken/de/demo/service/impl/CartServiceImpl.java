@@ -6,6 +6,7 @@ import com.chicken.de.demo.entity.Product;
 import com.chicken.de.demo.repository.CartRepository;
 import com.chicken.de.demo.repository.ProductRepository;
 import com.chicken.de.demo.service.interf.CartService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
