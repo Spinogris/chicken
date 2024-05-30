@@ -8,7 +8,8 @@ import java.util.List;
 public interface AccountService {
 
     AccountResponceDTO saveAccount(AccountCreateRequestDTO account);
-    AccountResponceDTO getAccountById(Long id);
+
+    AccountResponceDTO getAccountByEmail(String email);
 
     List<AccountResponceDTO> getAllAccounts();
 

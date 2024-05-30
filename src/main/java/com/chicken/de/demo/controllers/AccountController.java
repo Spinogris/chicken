@@ -24,7 +24,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AccountController {
 
-    //    @Autowired
     private final AccountService accountService;
 
     private final AuthenticationService authenticationService;
@@ -39,11 +38,11 @@ public class AccountController {
         return accountService.saveAccount(account);
     }
 
-    @Operation(summary = "Поиск USER по id", description = "Доступ у ROLE_ADMIN, ROLE_MANAGER")
+    @Operation(summary = "Поиск USER по email", description = "Доступ у ROLE_ADMIN, ROLE_MANAGER")
     @PreAuthorize("hasRole('ROLE_ADMIN, ROLE_MANAGER')")
-    @GetMapping("/{id}")
-    public AccountResponceDTO getAccountById(@PathVariable Long id) {
-        return accountService.getAccountById(id);
+    @GetMapping("/{email}")
+    public AccountResponceDTO getAccountByEmail(@PathVariable String email) {
+        return accountService.getAccountByEmail(email);
     }
 
     @Operation(summary = "Просмотр всех USERS", description = "Доступно ROLE_ADMIN")

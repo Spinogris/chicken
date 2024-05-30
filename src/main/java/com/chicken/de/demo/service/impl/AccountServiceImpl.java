@@ -49,9 +49,9 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
     }
 
     @Override
-    public AccountResponceDTO getAccountById(Long id) {
-        Account account = accountRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Account with id " + id + " not found!"));
+    public AccountResponceDTO getAccountByEmail(String email) {
+        Account account = accountRepository.findAccountByAccountPersonalData_Email(email)
+                .orElseThrow(() -> new RuntimeException("Account is absent"));
         return accountMapper.toDTO(account);
     }
 

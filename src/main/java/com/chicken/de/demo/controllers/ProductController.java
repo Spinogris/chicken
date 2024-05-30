@@ -22,7 +22,8 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @Operation(summary = "Сохраняет продукт. Id автогенерируется", description = "Доступно MANAGER, ADMIN")
+    @Operation(summary = "Сохраняет продукт. Id автогенерируется",
+            description = "Доступно MANAGER, ADMIN <br>В 'image' ссылка на изображение")
     @PreAuthorize("hasRole('ROLE_ADMIN, ROLE_MANAGER')")
     @PostMapping("/create")
     public ProductResponseDTO createProduct(@Valid @RequestBody ProductCreateRequestDTO product) {
