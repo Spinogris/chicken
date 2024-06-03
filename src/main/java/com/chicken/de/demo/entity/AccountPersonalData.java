@@ -14,7 +14,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "account_personal_data")
@@ -45,6 +44,7 @@ public class AccountPersonalData implements UserDetails {
     private Set<Role> roles;
 
     @OneToOne(mappedBy = "accountPersonalData", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private Account account;
 
     @OneToOne(mappedBy = "accountPersonalData") // todo

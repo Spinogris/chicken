@@ -24,7 +24,7 @@ public class ProductController {
 
     @Operation(summary = "Сохраняет продукт. Id автогенерируется",
             description = "Доступно MANAGER, ADMIN <br>В 'image' ссылка на изображение")
-    @PreAuthorize("hasRole('ROLE_ADMIN, ROLE_MANAGER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MANAGER')")
     @PostMapping("/create")
     public ProductResponseDTO createProduct(@Valid @RequestBody ProductCreateRequestDTO product) {
         return productService.saveProduct(product);
@@ -43,11 +43,11 @@ public class ProductController {
     }
 
     @Operation(summary = "Удаление продукта по id", description = "Доступно для ADMIN, MANAGER")
-    @PreAuthorize("hasRole('ROLE_ADMIN, ROLE_MANAGER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
     @DeleteMapping("/delete/{id}")
     public String removeProductById(@PathVariable Long id) {
         productService.removeProductById(id);
-        return "Продукт c id " + id + productService.getProdById(id).getName() + " удалён!";
+        return "Продукт c id " + id + " " + productService.getProdById(id).getName() + " удалён!";
     }
 
     @Operation(summary = "Поиск продукта по name, article",
