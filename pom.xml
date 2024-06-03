@@ -138,6 +138,10 @@
             <artifactId>jjwt-api</artifactId>
             <version>0.12.5</version>
         </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
