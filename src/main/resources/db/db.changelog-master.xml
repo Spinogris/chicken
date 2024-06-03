@@ -7,8 +7,24 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext
         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <include file="db/schema.sql"/>
-<!--    <include file="db/data.sql"/>-->
+    <changeSet author="Vladislav_Gorin" id="init-database">
+        <sqlFile dbms="postgresql, mysql"
+                 encoding="UTF-8"
+                 path="schema.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
+    <changeSet author="Vladislav_Gorin" id="fill-database">
+        <sqlFile dbms="postgresql, mysql"
+                 encoding="UTF-8"
+                 path="data.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+    </changeSet>
+
 
 
 </databaseChangeLog>
