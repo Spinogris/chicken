@@ -22,8 +22,8 @@ public class JwtService {
 
     //Читаем ключ для подписи из файла проперти jwttoken.signing.key кодированного в Base64
     //это должна быть любая комбинация символов(но не короткая), кодированная в Base64
-    public JwtService(@Value("${jwttoken.signing.key}") String jwttokenSigningKey) {
-        this.secretSigningKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwttokenSigningKey));
+    public JwtService(@Value("${jwttoken.signing.key}") String jwtTokenSigningKey) {
+        this.secretSigningKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtTokenSigningKey));
     }
 
     // Генерация токена
