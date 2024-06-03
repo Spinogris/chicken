@@ -1,15 +1,17 @@
 package com.chicken.de.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @Table
 @Entity(name = "roles")
-@ToString
+@ToString(exclude = "accountPersonalData")
+@AllArgsConstructor
+@NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Role {
 
     @Id
@@ -21,7 +23,7 @@ public class Role {
     private String roleName;
 
     @ManyToOne
-    @JoinColumn(name = "account_personal_data_id")
+    @JoinColumn(name = "account_personal_data_id", nullable = false)
     private AccountPersonalData accountPersonalData;
 
 }

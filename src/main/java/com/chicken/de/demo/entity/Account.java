@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServic
 @Getter
 @Setter
 @Entity
-@ToString
 @NoArgsConstructor
 @Table(name = "accounts")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -27,6 +26,7 @@ public class Account {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_personal_data_id", referencedColumnName = "id")
+    @ToString.Exclude
     private AccountPersonalData accountPersonalData;
 
     public Account(Long id,

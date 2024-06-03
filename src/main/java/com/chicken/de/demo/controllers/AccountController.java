@@ -39,7 +39,7 @@ public class AccountController {
     }
 
     @Operation(summary = "Поиск USER по email", description = "Доступ у ROLE_ADMIN, ROLE_MANAGER")
-    @PreAuthorize("hasRole('ROLE_ADMIN, ROLE_MANAGER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
     @GetMapping("/{email}")
     public AccountResponceDTO getAccountByEmail(@PathVariable String email) {
         return accountService.getAccountByEmail(email);
@@ -59,7 +59,7 @@ public class AccountController {
         return accountService.removeAccountById(id);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN, ROLE_MANAGER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
     @GetMapping("/search")
     public List<AccountResponceDTO> searchAccounts(@RequestParam String search) {
         return accountService.searchAccounts(search);

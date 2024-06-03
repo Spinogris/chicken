@@ -8,6 +8,7 @@ import lombok.*;
 import java.util.List;
 import java.util.Objects;
 
+@Setter
 @Entity
 @ToString
 @AllArgsConstructor
@@ -34,8 +35,8 @@ public class Cart {
     @JoinColumn(name = "card_id")
     private List<Product> products;
 
-    @OneToOne
-    @JoinColumn(name = "account_personal_data_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_personal_data_id", referencedColumnName = "id")
     private AccountPersonalData accountPersonalData;
 
     @Override
@@ -82,4 +83,7 @@ public class Cart {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+//    public void setAccountPersonalData(AccountPersonalData personalData) {
+//    }
 }
