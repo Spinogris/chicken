@@ -18,7 +18,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     private UserDetailsService userService;
 
-//    @Autowired
+    @Autowired
     private JwtService jwtService;
 
 

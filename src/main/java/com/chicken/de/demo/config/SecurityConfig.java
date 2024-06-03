@@ -1,6 +1,7 @@
 package com.chicken.de.demo.config;
 
 import com.chicken.de.demo.DTO.StandardResponseDto;
+import com.chicken.de.demo.security.JwtAuthenticationFilter;
 import io.swagger.v3.core.converter.AnnotatedType;
 import io.swagger.v3.core.converter.ModelConverters;
 import io.swagger.v3.core.converter.ResolvedSchema;
@@ -8,6 +9,7 @@ import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,11 +21,13 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -37,6 +41,8 @@ import static com.chicken.de.demo.documentation.OpenApiDocumentation.buildAuthen
 //@EnableGlobalMethodSecurity(prePostEnabled = true) //todo прочитать что это?
 @EnableMethodSecurity
 public class SecurityConfig {
+    @Autowired
+    private final JwtAuthenticationFilter authenticationFilter;
 
     private static final String[] SWAGGER = {
             "/v2/api-docs",
@@ -66,8 +72,8 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        //return NoOpPasswordEncoder.getInstance(); // Не зашифрованный
-        return new BCryptPasswordEncoder(); // Зашифрованный
+        return NoOpPasswordEncoder.getInstance(); // Не зашифрованный
+        //return new BCryptPasswordEncoder(); // Зашифрованный
     }
 
     @Bean
@@ -91,6 +97,8 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())       // Включает HTTP Basic аутентификацию с настройками по умолчанию. Это простая форма аутентификации, которая передаёт имя пользователя и пароль в заголовке HTTP запроса.
                 .logout(Customizer.withDefaults())      // Пользователь будет разлогинен
                 .authenticationManager(authenticationManager)       // Устанавливает кастомный AuthenticationManager для обработки аутентификации.
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();       // Метод build() завершает конфигурацию и создаёт объект SecurityFilterChain, который будет применён ко всем запросам.
     }
 }
