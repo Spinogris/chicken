@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -49,13 +50,15 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.allToDTO(productList);
     }
 
-    @Override
-    @Transactional
-    public ProductResponseDTO removeProductById(Long id) {
-        Product product = productRepository.findById(id)
+@Override
+@Transactional
+public ProductResponseDTO removeProductById(Long id) {
+        productRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Product with id " + id + " not found"));
-        return productMapper.toDTO(product);
-    }
+    productRepository.deleteById(id);
+    return null;
+}
+
 
     @Override
     public List<ProductResponseDTO> searchProductsByAll(String search) {

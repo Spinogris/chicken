@@ -1,14 +1,15 @@
 package com.chicken.de.demo.service.impl;
 
-import com.chicken.de.demo.DTO.product.ProductDTO;
-import com.chicken.de.demo.entity.Cart;
 import com.chicken.de.demo.entity.Product;
+import com.chicken.de.demo.entity.cart.Cart;
+import com.chicken.de.demo.entity.cart.CartItems;
 import com.chicken.de.demo.repository.CartRepository;
 import com.chicken.de.demo.repository.ProductRepository;
 import com.chicken.de.demo.service.interf.CartService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -17,37 +18,55 @@ public class CartServiceImpl implements CartService {
     private final ProductRepository productRepository;
     private final CartRepository cartRepository;
 
-    @Override
-    public Cart addToCart(ProductDTO product, int quantity) { // todo найити корзину юзера а потом ...
-        Optional<Product> productOptional = productRepository.findById(product.getId());
-        if (productOptional.isPresent()) {
-            Cart cart = new Cart();
-            cart.setProductName(product.getName());
-            cart.setProductId(product.getId());
-            cart.getQuantity();
-            return cartRepository.save(cart);
-        } else {
-            Cart emptyCart = new Cart();
-            emptyCart.setQuantity(0);
-            return emptyCart;
-        }
-    }
-
-    @Override
-    public Cart removeFromCart(ProductDTO product, int quantity) {
-        Optional<Cart> cartOptional = cartRepository.findById(product.getId());
-        if (cartOptional.isPresent()) {
-            cartOptional.get();
-            cartRepository.deleteById(product.getId());
-        } else {
-            System.out.println("Product not available!");
-        }
-        return null;
-    }
-
     public CartServiceImpl(ProductRepository productRepository,
                            CartRepository cartRepository) {
         this.productRepository = productRepository;
         this.cartRepository = cartRepository;
+    }
+
+    @Override
+    @Transactional
+    public Cart addToCart(Long cart_id, Long product_id, int quantity) {
+        Cart cart = cartRepository.findById(cart_id)
+                .orElseThrow(() -> new NoSuchElementException("Cart with id " + cart_id + " not found"));
+        Product product = productRepository.findById(product_id)
+                .orElseThrow(() -> new NoSuchElementException("Cart with id " + cart_id + " not found"));
+        Optional<CartItems> existItem = cart.getItems().stream()
+                .filter(item -> item.getProduct().getId().equals(product_id))
+                .findFirst();
+        if (existItem.isPresent()) {
+            CartItems items = existItem.get();
+            items.setQuantity(items.getQuantity() + quantity);
+        } else {
+            CartItems newItems = new CartItems();
+            newItems.setCart(cart);
+            newItems.setProduct(product);
+            newItems.setQuantity(quantity);
+            cart.getItems().add(newItems);
+        }
+        return cartRepository.save(cart);
+    }
+
+    @Override
+    public Cart removeFromCart(Long cart_id, Long product_id, int quantity) {
+        Cart cart = cartRepository.findById(cart_id)
+                .orElseThrow(() -> new NoSuchElementException("Cart with id " + cart_id + " not found"));
+        Product product = productRepository.findById(product_id)
+                .orElseThrow(() -> new NoSuchElementException("Cart with id " + product_id + " not found"));
+        Optional<CartItems> cartItems = cart.getItems().stream()
+                .filter(item -> item.getProduct().getId().equals(product_id))
+                .findFirst();
+        if (cartItems.isPresent()) {
+            CartItems items = cartItems.get();
+            int remainingQuantity = items.getQuantity() - quantity;
+            if (remainingQuantity <= 0){
+                cart.getItems().remove(cartItems);
+            }else {
+                items.setQuantity(remainingQuantity);
+            }
+        } else {
+            throw new NoSuchElementException("Product with id " + product_id + " not found in the cart");
+        }
+        return cartRepository.save(cart);
     }
 }

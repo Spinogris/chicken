@@ -1,9 +1,11 @@
 package com.chicken.de.demo.entity;
 
+import com.chicken.de.demo.entity.cart.CartItems;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 @Data
@@ -33,6 +35,9 @@ public class Product {
 
     @Column(name = "price_kg")
     private BigDecimal priceKg;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<CartItems> cartItems;
 
     @Override
     public boolean equals(Object o) {

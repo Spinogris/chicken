@@ -1,6 +1,6 @@
 package com.chicken.de.demo.repository;
 
-import com.chicken.de.demo.entity.Account;
+import com.chicken.de.demo.entity.acount.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

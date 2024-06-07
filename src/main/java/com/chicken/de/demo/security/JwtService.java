@@ -1,6 +1,6 @@
 package com.chicken.de.demo.security;
 
-import com.chicken.de.demo.entity.Account;
+import com.chicken.de.demo.entity.acount.Account;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;

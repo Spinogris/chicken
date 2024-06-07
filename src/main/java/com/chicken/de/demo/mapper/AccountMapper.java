@@ -2,7 +2,7 @@ package com.chicken.de.demo.mapper;
 
 import com.chicken.de.demo.DTO.account.AccountCreateRequestDTO;
 import com.chicken.de.demo.DTO.account.AccountResponceDTO;
-import com.chicken.de.demo.entity.Account;
+import com.chicken.de.demo.entity.acount.Account;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

@@ -2,16 +2,20 @@ package com.chicken.de.demo.service.impl;
 
 import com.chicken.de.demo.DTO.account.AccountCreateRequestDTO;
 import com.chicken.de.demo.DTO.account.AccountResponceDTO;
-import com.chicken.de.demo.entity.Account;
-import com.chicken.de.demo.entity.AccountPersonalData;
-import com.chicken.de.demo.entity.Cart;
+import com.chicken.de.demo.entity.acount.Account;
+import com.chicken.de.demo.entity.acount.AccountPersonalData;
+import com.chicken.de.demo.entity.cart.Cart;
 import com.chicken.de.demo.entity.Role;
 import com.chicken.de.demo.mapper.AccountMapper;
 import com.chicken.de.demo.repository.AccountRepository;
 import com.chicken.de.demo.repository.CartRepository;
 import com.chicken.de.demo.repository.RoleRepository;
 import com.chicken.de.demo.service.interf.AccountService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,28 +25,17 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService, UserDetailsService {
 
-    @Autowired
     private final AccountRepository accountRepository;
-    @Autowired
-    private final AccountMapper accountMapper;
-    @Autowired
-    private final CartRepository cartRepository;
-    @Autowired
-    private final RoleRepository roleRepository;
 
-    public AccountServiceImpl(AccountRepository accountRepository,
-                              AccountMapper accountMapper,
-                              CartRepository cartRepository,
-                              RoleRepository roleRepository) {
-        this.accountRepository = accountRepository;
-        this.accountMapper = accountMapper;
-        this.cartRepository = cartRepository;
-        this.roleRepository = roleRepository;
-    }
+    private final AccountMapper accountMapper;
+
+    private final CartRepository cartRepository;
 
     @Override
     @Transactional
@@ -50,7 +43,7 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
         Account account = accountMapper.toEntity(accountDTO);
 
         AccountPersonalData personalData = new AccountPersonalData();
-        personalData.setName(accountDTO.getFirstName() + " " + accountDTO.getLastName());
+        personalData.setName(accountDTO.getLastName());
         personalData.setEmail(accountDTO.getEmail());
         personalData.setPhoneNumber(accountDTO.getPhoneNumber());
         personalData.setCity(accountDTO.getCity());
@@ -96,6 +89,7 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
     public AccountResponceDTO removeAccountById(Long id) {
         Account account = accountRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Account with id " + id + " not found!"));
+        accountRepository.deleteById(id);
         return accountMapper.toDTO(account);
     }
 
@@ -106,9 +100,19 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return accountRepository.findByAccountPersonalData_Name(username)
-                .orElseThrow(()-> new UsernameNotFoundException("Don't find user by username" + username))
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        AccountPersonalData accountPersonalData = accountRepository.findAccountByAccountPersonalData_Email(email)
+                .orElseThrow(()-> new UsernameNotFoundException("Don't find user by email " + email))
                 .getAccountPersonalData();
+        return User.builder()
+                .username(accountPersonalData.getEmail())
+                .password(accountPersonalData.getPassword())
+                .roles()
+                .build();
+    }
+    private Set<GrantedAuthority> getRoles(AccountPersonalData accountPersonalData) {
+        return accountPersonalData.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getRoleName()))
+                .collect(Collectors.toSet());
     }
 }

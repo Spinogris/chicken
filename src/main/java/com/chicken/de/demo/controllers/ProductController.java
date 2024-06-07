@@ -2,6 +2,7 @@ package com.chicken.de.demo.controllers;
 
 import com.chicken.de.demo.DTO.product.ProductCreateRequestDTO;
 import com.chicken.de.demo.DTO.product.ProductResponseDTO;
+import com.chicken.de.demo.entity.Product;
 import com.chicken.de.demo.service.interf.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -24,7 +25,7 @@ public class ProductController {
 
     @Operation(summary = "Сохраняет продукт. Id автогенерируется",
             description = "Доступно MANAGER, ADMIN <br>В 'image' ссылка на изображение")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_MANAGER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
     @PostMapping("/create")
     public ProductResponseDTO createProduct(@Valid @RequestBody ProductCreateRequestDTO product) {
         return productService.saveProduct(product);
@@ -46,8 +47,9 @@ public class ProductController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
     @DeleteMapping("/delete/{id}")
     public String removeProductById(@PathVariable Long id) {
+        String product = productService.getProdById(id).getName();
         productService.removeProductById(id);
-        return "Продукт c id " + id + " " + productService.getProdById(id).getName() + " удалён!";
+        return "Продукт c id " + id + " " + product + " удалён!";
     }
 
     @Operation(summary = "Поиск продукта по name, article",

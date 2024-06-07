@@ -1,12 +1,11 @@
 package com.chicken.de.demo.service.interf;
 
 
-import com.chicken.de.demo.DTO.product.ProductDTO;
-import com.chicken.de.demo.entity.Cart;
+import com.chicken.de.demo.entity.cart.Cart;
 
 public interface CartService {
-    Cart addToCart(ProductDTO product, int quantity);
+    Cart addToCart(Long cartId, Long productId, int quantity);
 
-    Cart removeFromCart(ProductDTO product, int quantity);
+    Cart removeFromCart(Long cart_id, Long product, int quantity);
 
 }

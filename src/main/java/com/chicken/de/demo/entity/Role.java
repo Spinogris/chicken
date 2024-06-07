@@ -1,5 +1,6 @@
 package com.chicken.de.demo.entity;
 
+import com.chicken.de.demo.entity.acount.AccountPersonalData;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;

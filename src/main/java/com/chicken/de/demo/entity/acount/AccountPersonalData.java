@@ -1,5 +1,7 @@
-package com.chicken.de.demo.entity;
+package com.chicken.de.demo.entity.acount;
 
+import com.chicken.de.demo.entity.cart.Cart;
+import com.chicken.de.demo.entity.Role;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;

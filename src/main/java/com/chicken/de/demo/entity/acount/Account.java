@@ -1,9 +1,8 @@
-package com.chicken.de.demo.entity;
+package com.chicken.de.demo.entity.acount;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 
 @Getter
 @Setter
