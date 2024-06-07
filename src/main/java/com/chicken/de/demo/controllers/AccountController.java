@@ -40,21 +40,21 @@ public class AccountController {
 
     @Operation(summary = "Поиск USER по email", description = "Доступ у ROLE_ADMIN, ROLE_MANAGER")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-    @GetMapping("/{email}")
+    @GetMapping("/getByEmail/{email}")
     public AccountResponceDTO getAccountByEmail(@PathVariable String email) {
         return accountService.getAccountByEmail(email);
     }
 
     @Operation(summary = "Просмотр всех USERS", description = "Доступно ROLE_ADMIN")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping
+    @GetMapping("/getAllAccounts")
     public List<AccountResponceDTO> allAccounts() {
         return accountService.getAllAccounts();
     }
 
     @Operation(summary = "Удаление аккаунта", description = "Доступно ROLE_ADMIN")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/removeAccountById/{id}")
     public AccountResponceDTO removeAccountById(@PathVariable Long id) {
         return accountService.removeAccountById(id);
     }
@@ -65,8 +65,15 @@ public class AccountController {
         return accountService.searchAccounts(search);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/login") // eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MTc3ODU2NjAsImV4cCI6MTcxNzkyOTY2MCwic3ViIjoidmxhZGlzbGF2Nzc3ODhAZ21haWwuY29tIn0.3a68f9ut-TX_YkxFak-E6vnVC-lF3F3s_AwAYLYteFKbi-xJf7vOLTbqjPlVOtxOSZKoFtaU_SBVwXgkpXVtVQ
     public JwtAuthenticationResponse login(@RequestBody SignInRequest request) {
         return authenticationService.authenticate(request);
+    }
+
+    @Operation(summary = "Поиск USER ROLES по email", description = "Доступ у ROLE_ADMIN")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/roles/{email}")
+    public String getRoles(@PathVariable String email){
+        return accountService.getRoles(email).toString();
     }
 }

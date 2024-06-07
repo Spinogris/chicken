@@ -64,6 +64,10 @@ public class AccountPersonalData implements UserDetails {
         return getName();
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

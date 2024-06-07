@@ -2,19 +2,15 @@ package com.chicken.de.demo.service.impl;
 
 import com.chicken.de.demo.DTO.account.AccountCreateRequestDTO;
 import com.chicken.de.demo.DTO.account.AccountResponceDTO;
+import com.chicken.de.demo.entity.Role;
 import com.chicken.de.demo.entity.acount.Account;
 import com.chicken.de.demo.entity.acount.AccountPersonalData;
 import com.chicken.de.demo.entity.cart.Cart;
-import com.chicken.de.demo.entity.Role;
 import com.chicken.de.demo.mapper.AccountMapper;
 import com.chicken.de.demo.repository.AccountRepository;
 import com.chicken.de.demo.repository.CartRepository;
-import com.chicken.de.demo.repository.RoleRepository;
 import com.chicken.de.demo.service.interf.AccountService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,10 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -110,9 +103,12 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
                 .roles()
                 .build();
     }
-    private Set<GrantedAuthority> getRoles(AccountPersonalData accountPersonalData) {
-        return accountPersonalData.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRoleName()))
-                .collect(Collectors.toSet());
+    public Set<Role> getRoles(String email) {
+        Optional<Account> accountOptional = accountRepository.findAccountByAccountPersonalData_Email(email);
+        if (accountOptional.isPresent()){
+            Account account = accountOptional.get();
+            return account.getAccountPersonalData().getRoles();
+        } else
+        return Collections.emptySet();
     }
 }
