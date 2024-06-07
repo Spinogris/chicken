@@ -1,14 +1,15 @@
 package com.chicken.de.demo.controllers;
 
-import com.chicken.de.demo.DTO.product.ProductDTO;
+import com.chicken.de.demo.DTO.product.ProductResponseDTO;
+import com.chicken.de.demo.entity.Product;
 import com.chicken.de.demo.entity.cart.Cart;
 import com.chicken.de.demo.service.interf.CartService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -34,5 +35,11 @@ public class CartController {
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @Operation(summary = "Просмотр всех продуктов в корзине", description = "Доступно Аутентифицированных пользователей")
+    @GetMapping("/getProductsOfCart")
+    public List<ProductResponseDTO> getProductsOfCart(){
+        return cartService.getAllProducts();
     }
 }

@@ -1,14 +1,17 @@
 package com.chicken.de.demo.service.impl;
 
+import com.chicken.de.demo.DTO.product.ProductResponseDTO;
 import com.chicken.de.demo.entity.Product;
 import com.chicken.de.demo.entity.cart.Cart;
 import com.chicken.de.demo.entity.cart.CartItems;
+import com.chicken.de.demo.mapper.ProductMapper;
 import com.chicken.de.demo.repository.CartRepository;
 import com.chicken.de.demo.repository.ProductRepository;
 import com.chicken.de.demo.service.interf.CartService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -18,10 +21,14 @@ public class CartServiceImpl implements CartService {
     private final ProductRepository productRepository;
     private final CartRepository cartRepository;
 
+    private final ProductMapper productMapper;
+
     public CartServiceImpl(ProductRepository productRepository,
-                           CartRepository cartRepository) {
+                           CartRepository cartRepository,
+                           ProductMapper productMapper) {
         this.productRepository = productRepository;
         this.cartRepository = cartRepository;
+        this.productMapper = productMapper;
     }
 
     @Override
@@ -69,4 +76,11 @@ public class CartServiceImpl implements CartService {
         }
         return cartRepository.save(cart);
     }
+
+    @Override
+    public List<ProductResponseDTO> getAllProducts() {
+        List<Product> productList = productRepository.findAll();
+        return productMapper.allToDTO(productList);
+    }
+
 }
