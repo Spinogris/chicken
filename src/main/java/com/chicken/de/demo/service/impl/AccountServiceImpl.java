@@ -100,7 +100,7 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
         return User.builder()
                 .username(accountPersonalData.getEmail())
                 .password(accountPersonalData.getPassword())
-                .roles()
+                .roles("ROLE_ADMIN")
                 .build();
     }
     public Set<Role> getRoles(String email) {
