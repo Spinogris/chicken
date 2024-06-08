@@ -95,20 +95,24 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         AccountPersonalData accountPersonalData = accountRepository.findAccountByAccountPersonalData_Email(email)
-                .orElseThrow(()-> new UsernameNotFoundException("Don't find user by email " + email))
+                .orElseThrow(() -> new UsernameNotFoundException("Don't find user by email " + email))
                 .getAccountPersonalData();
+        if (accountPersonalData.getRoles() == null) {
+            throw new UsernameNotFoundException("Account personal data is null for user with email " + email);
+        }
         return User.builder()
                 .username(accountPersonalData.getEmail())
                 .password(accountPersonalData.getPassword())
-                .roles("ROLE_ADMIN")
+                .roles(String.valueOf(accountPersonalData.getRoles()))
                 .build();
     }
+
     public Set<Role> getRoles(String email) {
         Optional<Account> accountOptional = accountRepository.findAccountByAccountPersonalData_Email(email);
-        if (accountOptional.isPresent()){
+        if (accountOptional.isPresent()) {
             Account account = accountOptional.get();
             return account.getAccountPersonalData().getRoles();
         } else
-        return Collections.emptySet();
+            return Collections.emptySet();
     }
 }

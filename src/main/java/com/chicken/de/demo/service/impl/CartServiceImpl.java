@@ -58,7 +58,7 @@ public class CartServiceImpl implements CartService {
     public Cart removeFromCart(Long cart_id, Long product_id, int quantity) {
         Cart cart = cartRepository.findById(cart_id)
                 .orElseThrow(() -> new NoSuchElementException("Cart with id " + cart_id + " not found"));
-        Product product = productRepository.findById(product_id)
+        productRepository.findById(product_id)
                 .orElseThrow(() -> new NoSuchElementException("Cart with id " + product_id + " not found"));
         Optional<CartItems> cartItems = cart.getItems().stream()
                 .filter(item -> item.getProduct().getId().equals(product_id))
