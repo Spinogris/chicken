@@ -12,10 +12,11 @@ import java.util.Optional;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
     @Query("SELECT p FROM Account  p WHERE LOWER(p.lastName) LIKE LOWER(CONCAT('%', :search, '%')) " +
-    "OR LOWER(p.firstName) LIKE LOWER(CONCAT('%', :search, '%'))")
+            "OR LOWER(p.firstName) LIKE LOWER(CONCAT('%', :search, '%'))" +
+            "OR LOWER(p.accountPersonalData.email) LIKE LOWER(CONCAT('%', :search, '%'))" +
+            "OR LOWER(p.accountPersonalData.city) LIKE LOWER(CONCAT('%', :search, '%'))" +
+            "OR LOWER(p.accountPersonalData.phoneNumber) LIKE LOWER(CONCAT('%', :search, '%'))")
     List<Account> searchAccountsByAll(@Param("search") String search);
-
-    Optional<Account> findByAccountPersonalData_Name(String name);
 
     Optional<Account> findAccountByAccountPersonalData_Email(String email);
 

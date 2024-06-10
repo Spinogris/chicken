@@ -27,14 +27,4 @@ public class Account {
     @JoinColumn(name = "account_personal_data_id", referencedColumnName = "id")
     @ToString.Exclude
     private AccountPersonalData accountPersonalData;
-
-    public Account(Long id,
-                   String firstName,
-                   String lastName,
-                   AccountPersonalData accountPersonalData) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.accountPersonalData = accountPersonalData;
-    }
 }

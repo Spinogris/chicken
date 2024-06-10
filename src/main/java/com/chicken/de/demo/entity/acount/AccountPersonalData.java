@@ -4,6 +4,7 @@ import com.chicken.de.demo.entity.cart.Cart;
 import com.chicken.de.demo.entity.Role;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,6 +31,7 @@ public class AccountPersonalData implements UserDetails {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Email
     @Column(name = "email", nullable = false)
     private String email;
 

@@ -13,33 +13,41 @@ import java.util.List;
 public class ProductMapperImpl implements ProductMapper {
     @Override
     public ProductResponseDTO toDTO(Product product) {
-        ProductResponseDTO productDTO = new ProductResponseDTO();
-        productDTO.setId(product.getId());
-        productDTO.setImage(product.getImage());
-        productDTO.setName(product.getName());
-        productDTO.setArticle(product.getArticle());
-        productDTO.setDescriptions(productDTO.getDescriptions());
-        productDTO.setPriceForUnit(product.getPriceForUnit());
-        productDTO.setPriceKg(product.getPriceKg());
-        return productDTO;
+        if (product == null) {
+            return null;
+        } else {
+            ProductResponseDTO productDTO = new ProductResponseDTO();
+            productDTO.setId(product.getId());
+            productDTO.setImage(product.getImage());
+            productDTO.setName(product.getName());
+            productDTO.setArticle(product.getArticle());
+            productDTO.setDescriptions(productDTO.getDescriptions());
+            productDTO.setPriceForUnit(product.getPriceForUnit());
+            productDTO.setPriceKg(product.getPriceKg());
+            return productDTO;
+        }
     }
 
     @Override
     public Product toEntity(ProductCreateRequestDTO productCreateRequestDTO) {
-        Product product = new Product();
-        product.setImage(productCreateRequestDTO.getImage());
-        product.setName(productCreateRequestDTO.getName());
-        product.setArticle(productCreateRequestDTO.getArticle());
-        product.setDescriptions(productCreateRequestDTO.getDescriptions());
-        product.setPriceForUnit(productCreateRequestDTO.getPriceForUnit());
-        product.setPriceKg(productCreateRequestDTO.getPriceKg());
-        return product;
+        if (productCreateRequestDTO == null) {
+            return null;
+        } else {
+            Product product = new Product();
+            product.setImage(productCreateRequestDTO.getImage());
+            product.setName(productCreateRequestDTO.getName());
+            product.setArticle(productCreateRequestDTO.getArticle());
+            product.setDescriptions(productCreateRequestDTO.getDescriptions());
+            product.setPriceForUnit(productCreateRequestDTO.getPriceForUnit());
+            product.setPriceKg(productCreateRequestDTO.getPriceKg());
+            return product;
+        }
     }
 
     @Override
     public List<ProductResponseDTO> allToDTO(List<Product> products) {
         List<ProductResponseDTO> productDTOS = new ArrayList<>();
-        for (Product product : products){
+        for (Product product : products) {
             productDTOS.add(toDTO(product));
         }
         return productDTOS;
