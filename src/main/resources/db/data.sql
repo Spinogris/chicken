@@ -63,6 +63,6 @@ VALUES
 -- Вставка данных в таблицу roles
 INSERT INTO roles (role_name, account_personal_data_id)
 VALUES
-    ('ROLE_USER', 2),
-    ('ROLE_ADMIN', 1),
-    ('ROLE_MANAGER', 3);
+    ('USER', 2),
+    ('ADMIN', 1),
+    ('MANAGER', 3);

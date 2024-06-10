@@ -11,6 +11,7 @@ public class ProductResponseDTO {
     private String image;
     private String name;
     private String article;
+    private String descriptions;
     private BigDecimal priceForUnit;
     private BigDecimal priceKg;
 

@@ -32,9 +32,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public ProductResponseDTO saveProduct(ProductCreateRequestDTO productDTO) {
-        Product product = productMapper.toEntity(productDTO);
-        Product savedProduct = productRepository.save(product);
-        return productMapper.toDTO(savedProduct);
+        return productMapper.toDTO(productRepository.save(productMapper.toEntity(productDTO)));
     }
 
     @Override
@@ -46,8 +44,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductResponseDTO> getAllProducts() {
-        List<Product> productList = productRepository.findAll();
-        return productMapper.allToDTO(productList);
+        return productMapper.allToDTO(productRepository.findAll());
     }
 
 @Override

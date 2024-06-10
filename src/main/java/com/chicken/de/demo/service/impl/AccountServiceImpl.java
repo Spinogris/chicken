@@ -46,11 +46,9 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
 
         Set<Role> roles = new HashSet<>();
         Role userRole = new Role();
-        userRole.setRoleName("ROLE_USER");
+        userRole.setRoleName("USER");
         userRole.setAccountPersonalData(personalData);
         roles.add(userRole);
-        personalData.setRoles(roles);
-
         personalData.setRoles(roles);
 
         account.setAccountPersonalData(personalData);
@@ -87,8 +85,8 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
     }
 
     @Override
-    public List<AccountResponceDTO> searchAccounts(String name) {
-        List<Account> accountList = accountRepository.searchAccountsByAll(name);
+    public List<AccountResponceDTO> searchAccounts(String request) {
+        List<Account> accountList = accountRepository.searchAccountsByAll(request);
         return accountMapper.allToDTO(accountList);
     }
 
@@ -103,7 +101,9 @@ public class AccountServiceImpl implements AccountService, UserDetailsService {
         return User.builder()
                 .username(accountPersonalData.getEmail())
                 .password(accountPersonalData.getPassword())
-                .roles(String.valueOf(accountPersonalData.getRoles()))
+                .roles(accountPersonalData.getRoles().stream()
+                        .map(Role::getRoleName)
+                        .toArray(String[]::new))
                 .build();
     }
 

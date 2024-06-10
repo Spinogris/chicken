@@ -19,6 +19,10 @@ public class ProductCreateRequestDTO {
 
     @NonNull
     private String article;
+    
+    @NonNull
+    @Size(min = 4, max = 200)
+    private String descriptions;
 
     @NonNull
     @Positive

@@ -39,32 +39,32 @@ public class AccountController {
     }
 
     @Operation(summary = "Поиск USER по email", description = "Доступ у ROLE_ADMIN, ROLE_MANAGER")
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
+//    @PreAuthorize("permitAll()")
     @GetMapping("/getByEmail/{email}")
     public AccountResponceDTO getAccountByEmail(@PathVariable String email) {
         return accountService.getAccountByEmail(email);
     }
 
     @Operation(summary = "Просмотр всех USERS", description = "Доступно ROLE_ADMIN")
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PreAuthorize("permitAll()")
     @GetMapping("/getAllAccounts")
     public List<AccountResponceDTO> allAccounts() {
         return accountService.getAllAccounts();
     }
 
     @Operation(summary = "Удаление аккаунта", description = "Доступно ROLE_ADMIN")
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PreAuthorize("permitAll()")
     @DeleteMapping("/removeAccountById/{id}")
     public AccountResponceDTO removeAccountById(@PathVariable Long id) {
         return accountService.removeAccountById(id);
     }
 
-    @Operation(summary = "Поиск аккаунта", description = "Доступ у ROLE_ADMIN, ROLE_MANAGER")
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-@PreAuthorize("permitAll()")
+    @Operation(summary = "Поиск аккаунта по name, last_name, email, telephone_number.", description = "Доступ у ROLE_ADMIN, ROLE_MANAGER")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
+//@PreAuthorize("permitAll()")
     @GetMapping("/search")
     public List<AccountResponceDTO> searchAccounts(@RequestParam String search) {
         return accountService.searchAccounts(search);
@@ -76,8 +76,8 @@ public class AccountController {
     }
 
     @Operation(summary = "Поиск USER ROLES по email", description = "Доступ у ROLE_ADMIN")
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PreAuthorize("permitAll()")
     @GetMapping("/roles/{email}")
     public String getRoles(@PathVariable String email){
         return accountService.getRoles(email).toString();
