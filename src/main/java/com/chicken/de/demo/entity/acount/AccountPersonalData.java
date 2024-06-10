@@ -51,7 +51,7 @@ public class AccountPersonalData implements UserDetails {
     @ToString.Exclude
     private Account account;
 
-    @OneToOne(mappedBy = "accountPersonalData") // todo
+    @OneToOne(mappedBy = "accountPersonalData")
     private Cart cart;
 
     @Override

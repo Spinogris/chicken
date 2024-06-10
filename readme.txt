@@ -73,7 +73,7 @@
 12.2. Spring Boot 3.3.0-M1
 12.3. MySQL 8.0
 12.4. Spring Security
-12.5. MapStruct // todo
+12.5. MapStruct
 12.6. JWT
 12.7. Maven
 12.8. JUnit
