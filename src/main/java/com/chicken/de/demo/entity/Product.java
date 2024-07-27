@@ -2,7 +2,10 @@ package com.chicken.de.demo.entity;
 
 import com.chicken.de.demo.entity.cart.CartItems;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -31,6 +34,7 @@ public class Product {
     private String article;
 
     @Column(name = "descriptions")
+//    @JsonProperty
     private String descriptions;
 
     @Column(name = "price", nullable = false)

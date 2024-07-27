@@ -5,29 +5,31 @@ import com.chicken.de.demo.entity.Product;
 import com.chicken.de.demo.entity.cart.Cart;
 import com.chicken.de.demo.entity.cart.CartItems;
 import com.chicken.de.demo.mapper.ProductMapper;
+import com.chicken.de.demo.repository.CartItemsRepository;
 import com.chicken.de.demo.repository.CartRepository;
 import com.chicken.de.demo.repository.ProductRepository;
 import com.chicken.de.demo.service.interf.CartService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CartServiceImpl implements CartService {
 
     private final ProductRepository productRepository;
     private final CartRepository cartRepository;
-
+    private final CartItemsRepository cartItemsRepository;
     private final ProductMapper productMapper;
 
     public CartServiceImpl(ProductRepository productRepository,
                            CartRepository cartRepository,
+                           CartItemsRepository cartItemsRepository,
                            ProductMapper productMapper) {
         this.productRepository = productRepository;
         this.cartRepository = cartRepository;
+        this.cartItemsRepository = cartItemsRepository;
         this.productMapper = productMapper;
     }
 
@@ -66,9 +68,9 @@ public class CartServiceImpl implements CartService {
         if (cartItems.isPresent()) {
             CartItems items = cartItems.get();
             int remainingQuantity = items.getQuantity() - quantity;
-            if (remainingQuantity <= 0){
+            if (remainingQuantity <= 0) {
                 cart.getItems().remove(cartItems);
-            }else {
+            } else {
                 items.setQuantity(remainingQuantity);
             }
         } else {
@@ -78,9 +80,19 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<ProductResponseDTO> getAllProducts() {
-        List<Product> productList = productRepository.findAll();
-        return productMapper.allToDTO(productList);
+    public Set<ProductResponseDTO> getAllProducts(Long cart_id) {
+        List<CartItems> cartItems = cartItemsRepository.findByCartId(cart_id);
+        Set<Product> products = new HashSet<>();
+        for (CartItems cartItem : cartItems) {
+            Long productId = cartItem.getProduct().getId();
+            Product product = productRepository.findById(productId).orElse(null);
+            if (product != null) {
+                products.add(product);
+            }
+        }
+        return products.stream()
+                .map(productMapper::toDTO)
+                .collect(Collectors.toSet());
     }
 
 }

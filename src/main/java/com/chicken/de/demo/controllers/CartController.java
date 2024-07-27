@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,8 +39,8 @@ public class CartController {
     }
 
     @Operation(summary = "Просмотр всех продуктов в корзине", description = "Доступно Аутентифицированных пользователей")
-    @GetMapping("/getProductsOfCart")
-    public List<ProductResponseDTO> getProductsOfCart(){
-        return cartService.getAllProducts();
+    @GetMapping("/cart_titles/{id}")
+    public Set<ProductResponseDTO> getProductsOfCart(@PathVariable Long id){
+        return cartService.getAllProducts(id);
     }
 }
