@@ -1,6 +1,7 @@
 package com.chicken.de.demo.entity;
 
 import com.chicken.de.demo.entity.cart.CartItems;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,7 +35,6 @@ public class Product {
     private String article;
 
     @Column(name = "descriptions")
-//    @JsonProperty
     private String descriptions;
 
     @Column(name = "price", nullable = false)
@@ -55,12 +55,14 @@ public class Product {
                 && Objects.equals(image, product.image)
                 && Objects.equals(name, product.name)
                 && Objects.equals(article, product.article)
+                && Objects.equals(descriptions, product.descriptions)
                 && Objects.equals(priceForUnit, product.priceForUnit)
                 && Objects.equals(priceKg, product.priceKg);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, image, name, article, priceForUnit, priceKg);
+        return Objects.hash(id, image, name, article, descriptions, priceForUnit, priceKg);
     }
+
 }

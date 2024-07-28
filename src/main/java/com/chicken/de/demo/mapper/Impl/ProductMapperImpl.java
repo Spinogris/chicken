@@ -21,7 +21,7 @@ public class ProductMapperImpl implements ProductMapper {
             productDTO.setImage(product.getImage());
             productDTO.setName(product.getName());
             productDTO.setArticle(product.getArticle());
-            productDTO.setDescriptions(productDTO.getDescriptions());
+            productDTO.setDescriptions(product.getDescriptions());
             productDTO.setPriceForUnit(product.getPriceForUnit());
             productDTO.setPriceKg(product.getPriceKg());
             return productDTO;
@@ -46,11 +46,11 @@ public class ProductMapperImpl implements ProductMapper {
 
     @Override
     public List<ProductResponseDTO> allToDTO(List<Product> products) {
-        List<ProductResponseDTO> productDTOS = new ArrayList<>();
+        List<ProductResponseDTO> productDTOs = new ArrayList<>();
         for (Product product : products) {
-            productDTOS.add(toDTO(product));
+            productDTOs.add(toDTO(product));
         }
-        return productDTOS;
+        return productDTOs;
     }
 
 }

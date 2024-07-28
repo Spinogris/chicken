@@ -31,4 +31,5 @@ public class ProductCreateRequestDTO {
     @NonNull
     @Positive
     private BigDecimal priceKg;
+
 }

@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS products (
     image VARCHAR(128) NOT NULL,
     article VARCHAR(128),
     name VARCHAR(128),
-    descriptions TEXT,
+    descriptions VARCHAR(128),
     price DOUBLE NOT NULL,
     price_kg DOUBLE
     );

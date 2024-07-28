@@ -49,16 +49,16 @@ VALUES
 -- Вставка данных в таблицу products
 INSERT INTO products (image, article, name, descriptions, price, price_kg)
 VALUES
-    ('chicken.jpg', 'CHI001', 'Курица целиком', '', 5.99, 3.50),
-    ('chicken_wings.jpg', 'CHI002', 'Крылья куриные', '', 3.49, NULL),
-    ('chicken_breast.jpg', 'CHI003', 'Грудка куриная', '', 7.99, 5.00),
-    ('chicken_legs.jpg', 'CHI004', 'Ножки куриные', '', 2.99, NULL),
-    ('chicken_thighs.jpg', 'CHI005', 'Бедра куриные', '', 4.49, NULL),
-    ('chicken_fillets.jpg', 'CHI006', 'Филе куриное', '', 8.99, 6.50),
-    ('whole_duck.jpg', 'DUC001', 'Утка целиком', '', 12.99, 9.00),
-    ('duck_legs.jpg', 'DUC002', 'Ножки утиные', '', 6.99, NULL),
-    ('duck_breast.jpg', 'DUC003', 'Грудка утиная', '', 10.49, NULL),
-    ('turkey_whole.jpg', 'TUR001', 'Индейка целиком', '', 15.99, 11.50);
+    ('chicken.jpg', 'CHI001', 'Курица целиком', 'Something text', 5.99, 3.50),
+    ('chicken_wings.jpg', 'CHI002', 'Крылья куриные', 'Something text', 3.49, NULL),
+    ('chicken_breast.jpg', 'CHI003', 'Грудка куриная', 'Something text', 7.99, 5.00),
+    ('chicken_legs.jpg', 'CHI004', 'Ножки куриные', 'Something text', 2.99, NULL),
+    ('chicken_thighs.jpg', 'CHI005', 'Бедра куриные', 'Something text', 4.49, NULL),
+    ('chicken_fillets.jpg', 'CHI006', 'Филе куриное', 'Something text', 8.99, 6.50),
+    ('whole_duck.jpg', 'DUC001', 'Утка целиком', 'Something text', 12.99, 9.00),
+    ('duck_legs.jpg', 'DUC002', 'Ножки утиные', 'Something text', 6.99, NULL),
+    ('duck_breast.jpg', 'DUC003', 'Грудка утиная', 'Something text', 10.49, NULL),
+    ('turkey_whole.jpg', 'TUR001', 'Индейка целиком', 'Something text', 15.99, 11.50);
 
 -- Вставка данных в таблицу roles
 INSERT INTO roles (role_name, account_personal_data_id)

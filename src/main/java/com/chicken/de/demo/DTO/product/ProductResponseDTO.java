@@ -1,10 +1,11 @@
 package com.chicken.de.demo.DTO.product;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.math.BigDecimal;
 
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 public class ProductResponseDTO {
     private Long id;
